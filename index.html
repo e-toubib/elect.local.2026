@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الدليل التفاعلي للانتخابات المحلية</title>
+<meta name="description" content="دليل تفاعلي للمنتخب المحلي والمواطن - محليات 2026">
+
+<meta property="og:title" content="الدليل التفاعلي للانتخابات المحلية 2026 - elect.local.2026">
+<meta property="og:description" content="دليل تفاعلي للمنتخب المحلي والمواطن - يعمل بدون انترنت. حمله من هنا">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://e-toubib.github.io/elect.local.2026/">
+<meta property="og:locale" content="ar_DZ">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a civic handbook. Header band with role switch, sticky chip-nav of sections, cards and small legal tools; references marked by status (in force / amended / draft). */
+:root{
+  --paper:#f4f7f5; --card:#ffffff; --ink:#13241b; --muted:#566a5f; --line:#d5dfd9;
+  --green:#0b6a44; --green-soft:#e3f0e9; --red:#b8322a; --red-soft:#fbe9e7; --gold:#9a6b00; --gold-soft:#fbf1d9;
+  --display:"Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
+  --body:"IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --r:12px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1713; --card:#16211b; --ink:#e6efe9; --muted:#9db1a5; --line:#2a3a31;
+    --green:#4cc28a; --green-soft:#16352a; --red:#ff7b6e; --red-soft:#3a1e1b; --gold:#e6b44a; --gold-soft:#33291a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1713; --card:#16211b; --ink:#e6efe9; --muted:#9db1a5; --line:#2a3a31;
+  --green:#4cc28a; --green-soft:#16352a; --red:#ff7b6e; --red-soft:#3a1e1b; --gold:#e6b44a; --gold-soft:#33291a;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.75}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.45;text-wrap:balance;margin:0}
+a{color:var(--green)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--green);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* Header */
+.top{background:var(--green);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .top{background:#0b3d29}}
+:root[data-theme="dark"] .top{background:#0b3d29}
+.top .wrap{padding-top:22px;padding-bottom:18px;display:grid;gap:14px}
+.eyebrow{font-size:13px;opacity:.85;letter-spacing:.2px}
+.top h1{font-size:clamp(22px,4.6vw,34px);font-weight:800}
+.top p{margin:0;opacity:.92;max-width:62ch}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:6px 14px;font-size:14px}
+.pill b{font-family:var(--display);font-size:16px;font-variant-numeric:tabular-nums}
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(0,0,0,.18);padding:6px;border-radius:14px}
+.switch button{border:0;border-radius:10px;padding:12px 10px;background:transparent;color:#fff;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;display:grid;gap:2px}
+.switch button small{font-family:var(--body);font-weight:400;font-size:12px;opacity:.85}
+.switch button[aria-selected="true"]{background:#fff;color:#0b6a44}
+.switch button[aria-selected="true"] small{opacity:1;color:#3c5a4a}
+
+/* Section nav */
+.secnav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.secnav .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:thin}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;white-space:nowrap}
+.chip[aria-current="true"]{background:var(--green);border-color:var(--green);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip[aria-current="true"]{color:#0f1713}}
+:root[data-theme="dark"] .chip[aria-current="true"]{color:#0f1713}
+
+/* Search */
+.search{margin:18px 0 6px;display:flex;gap:8px}
+.search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:11px 14px}
+.results{display:grid;gap:8px;margin-bottom:8px}
+.result{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 14px;cursor:pointer;text-align:right}
+.result b{font-family:var(--display);font-size:14px}
+.result span{display:block;font-size:13px;color:var(--muted)}
+
+/* Content */
+main{padding-bottom:30px}
+.sec{padding:22px 0 8px;scroll-margin-top:64px}
+.sec-head{display:grid;gap:4px;margin-bottom:14px}
+.sec-head .num{font-family:var(--display);font-size:13px;color:var(--green)}
+.sec-head h2{font-size:clamp(19px,3.4vw,24px)}
+.sec-head p{margin:0;color:var(--muted);max-width:68ch}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:8px;align-content:start}
+.card h3{font-size:16px}
+.card p{margin:0}
+.card ul,.card ol{margin:0;padding-inline-start:20px;display:grid;gap:4px}
+.ref{font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+.tag{display:inline-block;font-size:12px;border-radius:6px;padding:1px 8px;font-weight:600;vertical-align:middle}
+.t-in{background:var(--green-soft);color:var(--green)}
+.t-mod{background:var(--gold-soft);color:var(--gold)}
+.t-draft{background:var(--red-soft);color:var(--red)}
+.note{border-inline-start:4px solid var(--gold);background:var(--gold-soft);border-radius:8px;padding:10px 14px;font-size:14.5px}
+.warn{border-inline-start:4px solid var(--red);background:var(--red-soft);border-radius:8px;padding:10px 14px;font-size:14.5px}
+details.acc{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+details.acc+details.acc{margin-top:8px}
+details.acc summary{cursor:pointer;padding:13px 16px;font-family:var(--display);font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.acc summary::after{content:"+";color:var(--green);font-size:20px;line-height:1}
+details.acc[open] summary::after{content:"−"}
+details.acc .in{padding:0 16px 14px;display:grid;gap:8px}
+details.acc .in ul{margin:0;padding-inline-start:20px;display:grid;gap:4px}
+
+/* Timeline */
+.timeline{display:grid;gap:0;position:relative}
+.step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding-bottom:14px}
+.dot{width:34px;height:34px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:14px;border:2px solid var(--green)}
+.step.done .dot{background:var(--green);color:#fff}
+.step h4{font-size:15px}
+.step p{margin:0;font-size:14.5px;color:var(--muted)}
+
+/* Tools */
+.tool{background:var(--card);border:2px solid var(--green);border-radius:var(--r);padding:16px 18px;display:grid;gap:12px}
+.tool-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tool-head h3{font-size:16px}
+.badge{font-size:12px;background:var(--green);color:#fff;border-radius:6px;padding:2px 8px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .badge{color:#0f1713}}
+:root[data-theme="dark"] .badge{color:#0f1713}
+.fields{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+.field{display:grid;gap:4px}
+.field label{font-size:13.5px;color:var(--muted)}
+.field input,.field select{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:9px 12px;width:100%}
+.btn{border:0;background:var(--green);color:#fff;border-radius:9px;padding:10px 16px;font-family:var(--display);font-weight:700;font-size:14px;cursor:pointer}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0f1713}}
+:root[data-theme="dark"] .btn{color:#0f1713}
+.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+.out{display:grid;gap:8px}
+.kpis{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.kpi{background:var(--green-soft);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-family:var(--display);font-size:22px;color:var(--green);font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:right}
+th{font-family:var(--display);font-size:13px;color:var(--muted);font-weight:600}
+.tablebox{overflow-x:auto}
+.bar{height:8px;border-radius:4px;background:var(--green);min-width:2px}
+.excluded td{color:var(--muted);text-decoration:line-through}
+.verdict{border-radius:10px;padding:12px 14px;font-weight:600}
+.v-ok{background:var(--green-soft);color:var(--green)}
+.v-bad{background:var(--red-soft);color:var(--red)}
+.v-mid{background:var(--gold-soft);color:var(--gold)}
+
+.ck{display:grid;gap:6px}
+.ck-row{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--paper);cursor:pointer;font-size:14.5px}
+.ck-row input{margin-top:6px;accent-color:var(--green)}
+.ck-row:has(input:checked){background:var(--green-soft);border-color:var(--green)}
+/* Ballot */
+.ballots{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.ballot{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:6px;background:var(--paper)}
+.ballot.in{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.ballot h4{font-size:14px}
+.ballot label{display:flex;gap:8px;align-items:center;font-size:14px}
+.ballot .put{justify-self:start;font-size:13px;padding:6px 10px}
+
+/* Finder */
+.needs{display:flex;flex-wrap:wrap;gap:8px}
+.need{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer}
+.need[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft);color:var(--green);font-weight:600}
+
+/* Quiz */
+.q{display:grid;gap:8px}
+.q h4{font-size:15px}
+.opts{display:grid;gap:6px}
+.opt{border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:9px 12px;text-align:right;cursor:pointer}
+.opt.right{border-color:var(--green);background:var(--green-soft);color:var(--green);font-weight:600}
+.opt.wrong{border-color:var(--red);background:var(--red-soft);color:var(--red)}
+.explain{font-size:14px;color:var(--muted)}
+.qnav{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.score{font-family:var(--display);font-weight:700;color:var(--green)}
+
+/* Library */
+.lib{display:grid;gap:8px}
+.lib-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.lib-row b{font-family:var(--display);font-size:14.5px}
+.lib-row p{margin:2px 0 0;font-size:13.5px;color:var(--muted)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+
+/* Home */
+.home-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:18px}
+.door{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:10px;cursor:pointer;text-align:right}
+.door:hover{border-color:var(--green)}
+.door h2{font-size:20px}
+.door ul{margin:0;padding-inline-start:20px;color:var(--muted);font-size:14.5px}
+.door .go{font-family:var(--display);color:var(--green);font-weight:700}
+
+footer{border-top:1px solid var(--line);background:var(--card);margin-top:24px}
+footer .wrap{padding-top:18px;padding-bottom:26px;display:grid;gap:10px;font-size:13.5px;color:var(--muted)}
+.credit{font-family:var(--display);font-size:16px;color:var(--ink);font-weight:700}
+.credit span{color:var(--green)}
+.hidden{display:none !important}
+@media (prefers-reduced-motion: no-preference){ .sec{animation:rise .35s ease both} @keyframes rise{from{transform:translateY(6px)}to{transform:none}} }
+@media (max-width:420px){ .switch button{font-size:14px;padding:10px 6px} }
+</style>
+</head>
+<body>
+
+<div id="dl-banner" style="background:#13241b;color:#fff;padding:10px 16px;position:sticky;top:0;z-index:9999;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;font-family:'IBM Plex Sans Arabic',sans-serif">
+  <div style="display:flex;gap:8px;align-items:center;font-size:14px"><span style="background:#0b6a44;padding:4px 10px;border-radius:999px">جديد</span> يعمل بدون انترنت - حمله على هاتفك</div>
+  <div style="display:flex;gap:8px">
+    <button onclick="downloadApp()" style="background:#fff;color:#0b6a44;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:'Noto Kufi Arabic',sans-serif">📥 تحميل التطبيق</button>
+    <button onclick="document.getElementById('dl-banner').style.display='none'" style="background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:8px;padding:8px 10px;cursor:pointer">✕</button>
+  </div>
+</div>
+<script>
+function downloadApp(){
+  const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'الدليل-الانتخابات-المحلية-2026.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">دليل تثقيفي للمترشحين والناخبين · محيّن ومراجَع إلى غاية 30 أكتوبر 2026</div>
+    <h1>الدليل التفاعلي للانتخابات المحلية</h1>
+    <p>انتخاب أعضاء المجالس الشعبية البلدية والولائية: القوانين التي تحكم البلدية والولاية، شروط الترشح، نمط الاقتراع، وحقوق المواطن وواجباته.</p>
+    <div class="meta-row">
+      <span class="pill">يوم الاقتراع: <b id="eday">السبت 28 نوفمبر 2026</b></span>
+      <span class="pill" id="countdown">…</span>
+      <span class="pill">69 ولاية · 1541 بلدية</span>
+    </div>
+    <div class="switch" role="tablist" aria-label="اختيار الواجهة">
+      <button role="tab" id="tab-elected" aria-selected="false" data-view="elected">واجهة المنتخب المحلي<small>المترشح ورئيس وعضو المجلس</small></button>
+      <button role="tab" id="tab-citizen" aria-selected="false" data-view="citizen">واجهة المواطن<small>الناخب والمتابع للشأن المحلي</small></button>
+    </div>
+  </div>
+</header>
+
+<nav class="secnav" aria-label="أقسام الواجهة"><div class="wrap" id="secnav"></div></nav>
+
+<main class="wrap">
+  <div class="search">
+    <label for="q" class="hidden">بحث</label>
+    <input id="q" type="search" placeholder="ابحث في الدليل: نصاب، ميزانية، وكالة، رخصة بناء، توقيعات…" autocomplete="off">
+  </div>
+  <div class="results" id="results"></div>
+  <div id="view"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="credit">من إعداد : <span>قارة مصطفى خالد</span>، خبير مكون</div>
+    <div>دليل تثقيفي لا يغني عن النصوص الرسمية المنشورة في الجريدة الرسمية ولا عن قرارات السلطة الوطنية المستقلة للانتخابات. أرقام المواد مأخوذة من النصوص كما عُدّلت؛ يُنصح بالرجوع إلى النص الكامل قبل أي إجراء.</div>
+    <div>مصادر للمراجعة: <a href="https://ina-elections.dz/">السلطة الوطنية المستقلة للانتخابات</a> · <a href="https://www.joradp.dz/">الجريدة الرسمية (JORADP)</a> · <a href="https://cour-constitutionnelle.dz/ar/2026/03/28/19905/">الدستور (تعديل 2026)</a> · <a href="https://interieur.gov.dz/">وزارة الداخلية والجماعات المحلية</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var ELECTION = new Date("2026-11-28T08:00:00+01:00");
+
+/* ---------- helpers ---------- */
+function el(tag, attrs, html){ var e=document.createElement(tag); if(attrs){for(var k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k,attrs[k]); }} if(html!==undefined) e.innerHTML=html; return e; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function fmt(n){ return Number(n).toLocaleString("ar-DZ"); }
+function tag(status){ var m={in:["t-in","ساري"],mod:["t-mod","معدّل"],draft:["t-draft","مشروع"]}[status]; return '<span class="tag '+m[0]+'">'+m[1]+'</span>'; }
+
+/* ---------- countdown ---------- */
+(function(){
+  var now=new Date(), d=Math.ceil((ELECTION-now)/86400000);
+  document.getElementById("countdown").innerHTML = d>0 ? "متبقٍّ <b>"+fmt(d)+"</b> يوماً" : (d===0?"<b>اليوم يوم الاقتراع</b>":"انتهى الاقتراع، بدأت العهدة");
+})();
+
+/* ---------- CONTENT ---------- */
+var VIEWS = {
+ elected: {
+  label:"المنتخب المحلي",
+  sections:[
+   {id:"e-legal", title:"الإطار القانوني في سطور", lead:"النصوص التي تحكم عملك مباشرة، والنصوص التي تتقاطع معه يومياً.",
+    cards:[
+     {t:"الدستور (2020، معدّل 2026)", b:"<p>الجماعات المحلية للدولة هي البلدية والولاية، والبلدية هي الجماعة القاعدية. تقوم العلاقة بين الدولة والجماعات المحلية على اللامركزية وعدم التركيز، وتشجع الدولة الديمقراطية التشاركية محلياً لا سيما عبر المجتمع المدني.</p>", ref:"المادتان 16 و17 · القانون 26-04 المتضمن التعديل التقني للدستور (ج.ر 22، 26 مارس 2026)"},
+     {t:"قانون البلدية 11-10", b:"<p>صادر في 22 يونيو 2011، يحدد هيئات البلدية (المجلس الشعبي البلدي، الهيئة التنفيذية برئاسة رئيسه، الإدارة بتنشيط الأمين العام) وصلاحياتها وماليتها والرقابة عليها.</p><p>عُدّل بالأمر 21-13 (31 أوت 2021) في تنصيب المجلس وانتخاب رئيسه.</p>", ref:"ساري المفعول إلى حين صدور القانون الجديد للبلدية"},
+     {t:"قانون الولاية 12-07", b:"<p>صادر في 21 فبراير 2012، ينظم المجلس الشعبي الولائي (هيئة المداولة) والوالي (ممثل الدولة والهيئة التنفيذية)، وصلاحيات الولاية في التنمية والتجهيز والتضامن.</p>", ref:"ساري المفعول · مشروع قانون جديد قيد الإنضاج"},
+     {t:"القانون العضوي للانتخابات", b:"<p>الأمر 21-01 (10 مارس 2021) المعدّل والمتمّم بالقانون العضوي 26-05 (4 أفريل 2026): أعاد توزيع المهام فأسند التحضير المادي للداخلية والرقابة للسلطة المستقلة، وعدّل شروط القوائم والتوقيعات.</p>", ref:"عُدّلت 85 مادة واستُحدثت 4 مواد وأُلغيت 5"},
+     {t:"التنظيم الإقليمي الجديد", b:"<p>القانون 26-06 (4 أفريل 2026) المعدّل للقانون 84-09: الجزائر 69 ولاية و1541 بلدية، مع مرحلة انتقالية لتحويل الصلاحيات إلى الولايات المستحدثة.</p>", ref:"ج.ر 25، 5 أفريل 2026"},
+     {t:"نصوص ذات صلة غير مباشرة", b:"<ul><li>قانون الوقاية من الفساد ومكافحته 06-01 (التصريح بالممتلكات، تعارض المصالح).</li><li>القانون 23-12 المحدد للقواعد العامة للصفقات العمومية.</li><li>قانون التهيئة والتعمير 90-29 ومرسوم عقود التعمير 15-19.</li><li>قانون الأملاك الوطنية 90-30.</li><li>قانون تسيير النفايات 01-19 وقانون حماية البيئة 03-10.</li><li>المرسوم 88-131 المنظم للعلاقات بين الإدارة والمواطن.</li></ul>", ref:"انظر المكتبة القانونية أسفل الدليل"}
+    ]},
+   {id:"e-run", title:"قبل الترشح: الشروط والموانع", lead:"ما يجب أن يتوفر فيك وفي قائمتك قبل إيداع التصريح الجماعي بالترشح لدى المنسق الولائي للسلطة المستقلة.",
+    cards:[
+     {t:"شروط المترشح", b:"<ul><li>بلوغ 23 سنة على الأقل يوم الاقتراع.</li><li>الجنسية الجزائرية.</li><li>التسجيل في القائمة الانتخابية للدائرة التي يترشح فيها.</li><li>إثبات الوضعية تجاه الخدمة الوطنية.</li><li>إثبات الوضعية تجاه الإدارة الضريبية: تسديد، أو جدولة، أو عدم خضوع.</li></ul>", ref:"الأمر 21-01 المعدّل · بيان السلطة المستقلة لمحليات 2026"},
+     {t:"شروط النزاهة", b:"<p>ألا يكون المترشح معروفاً لدى العامة بصلته بأوساط المال والأعمال المشبوهة، أو بتأثيره المباشر أو غير المباشر على حرية اختيار الناخبين وحسن سير العملية الانتخابية.</p><p class='warn'>هذا الشرط كان سبباً في رفض ترشيحات عديدة؛ تأكد من نظافة ملفك قبل الإيداع.</p>", ref:"شروط النزاهة في القانون العضوي للانتخابات"},
+     {t:"موانع الترشح", b:"<ul><li>حكم نهائي بعقوبة سالبة للحرية بسبب جناية أو جنحة دون رد الاعتبار (تستثنى الجنح غير العمدية).</li><li>الترشح في أكثر من قائمة أو أكثر من دائرة.</li><li>أكثر من مترشحَين اثنين من الأسرة نفسها في القائمة (قرابة أو مصاهرة).</li><li>الوظائف غير القابلة للانتخاب خلال ممارستها في دائرة الاختصاص (ولاة، قضاة، أسلاك الأمن، مسؤولو المصالح…).</li></ul>", ref:"المادتان 188 و190 من الأمر 21-01 (حالات عدم القابلية للانتخاب)"},
+     {t:"تزكية القائمة", b:"<ul><li>تُعفى من جمع التوقيعات القوائم المقدّمة من حزب نال أكثر من 4% من الأصوات المعبّر عنها في الدائرة خلال آخر محليات، أو له 10 منتخبين على الأقل في مجالس الولاية.</li><li>غير ذلك (حزب جديد أو غير مستوفٍ، قائمة حرة): <b>35 توقيعاً</b> من ناخبي الدائرة عن كل مقعد.</li><li>إعفاء انتقالي للقوائم الحزبية في الولايات المستحدثة إن استوفى الحزب أحد الشرطين في الولاية الأم.</li></ul>", ref:"القانون العضوي 26-05 · الأحكام الانتقالية"},
+     {t:"وثائق الملف", b:"<ul><li>التصريح الجماعي وقائمة المترشحين وبطاقة معلومات لكل مترشح.</li><li>شهادة الجنسية، شهادة التسجيل أو بطاقة الناخب.</li><li>وثيقة الخدمة الوطنية، الوضعية الضريبية، شهادة المستوى التعليمي.</li><li>صورة شمسية، وثيقة التزكية أو محضر اعتماد استمارات التوقيع.</li><li>برنامج الحملة الانتخابية.</li></ul>", ref:"تودع استمارات التوقيع لدى رئيس اللجنة البلدية لمراجعة القوائم قبل 48 ساعة على الأقل من نهاية الآجال"}
+    ], tool:"listCalc"},
+   {id:"e-vote", title:"نمط الاقتراع وتوزيع المقاعد", lead:"اقتراع نسبي على القائمة المفتوحة بتصويت تفضيلي دون مزج، لعهدة خمس سنوات.",
+    cards:[
+     {t:"القاعدة", b:"<ol><li>تُقصى القوائم التي لم تبلغ 5% من الأصوات المعبّر عنها (إلا إذا لم تبلغها أي قائمة).</li><li>المعامل الانتخابي = الأصوات المعبّر عنها (منقوصاً منها أصوات القوائم المقصاة) ÷ عدد المقاعد.</li><li>تأخذ كل قائمة مقاعد بعدد المرات التي تحصّلت فيها على المعامل.</li><li>المقاعد الباقية تُمنح حسب أكبر البواقي.</li><li>داخل القائمة: المقاعد للمترشحين حسب الأصوات التفضيلية التي نالها كل منهم.</li></ol>", ref:"الأمر 21-01 المعدّل · أحكام انتخاب المجالس الشعبية البلدية والولائية"},
+     {t:"حالات التساوي", b:"<ul><li>بين قائمتين على مقعد: يُمنح للقائمة ذات معدل السن الأصغر.</li><li>بين مترشحَين من القائمة على المقعد الأخير: للأصغر سناً.</li><li>بين مترشح ومترشحة: تفوز المترشحة.</li></ul>", ref:"قواعد الحسم في توزيع المقاعد"},
+     {t:"عدد المقاعد", b:"<p><b>البلدي:</b> 13 (أقل من 10 آلاف)، 15، 19، 23، 33، 43 (أكثر من 200 ألف نسمة).</p><p><b>الولائي:</b> 35 (أقل من 250 ألف)، 39، 43، 47، 51، 55 (أكثر من 1.25 مليون).</p>", ref:"حسب نتائج آخر إحصاء عام · المرسوم التنفيذي 26-282 (24 أوت 2026) يحدد الدوائر والمقاعد فعلياً"}
+    ], tool:"seatSim"},
+   {id:"e-install", title:"التنصيب وانتخاب الرئيس", lead:"من إعلان النتائج النهائية إلى تسليم المهام، بآجال محددة لا تحتمل الاجتهاد.",
+    timeline:[
+     ["الاستدعاء والتنصيب","يستدعي الوالي المنتخبين لتنصيب المجلس الشعبي البلدي خلال 8 أيام التي تلي إعلان النتائج النهائية."],
+     ["جلسة انتخاب الرئيس","خلال 5 أيام التي تلي التنصيب، برئاسة المنتخب الأكبر سناً، ومكتب مؤقت يضمه مع المنتخبَين الأصغر سناً (غير مترشحين)."],
+     ["من يقدّم المرشح؟","القائمة الحائزة على الأغلبية المطلقة للمقاعد؛ وإلا القائمتان الحائزتان على 35% على الأقل من المقاعد؛ وإلا جميع القوائم."],
+     ["التصويت","اقتراع سري. يُعلن فائزاً من نال الأغلبية المطلقة؛ وإلا دور ثانٍ بين الأول والثاني ويفوز صاحب أكثر الأصوات؛ وعند التساوي يفوز الأكبر سناً."],
+     ["تسليم المهام","يوقّع محضر تسليم المهام بين الرئيس المنتهية عهدته والجديد خلال 8 أيام من التنصيب."],
+     ["النواب واللجان","يعين الرئيس نوابه ويعرضهم على المجلس: نائبان (13 و15 مقعداً)، 3 (19 و23)، 4 (33)، 5 (43). ثم تُشكَّل اللجان الدائمة."]
+    ], ref:"المواد 64 و64 مكرر و65 و69 من القانون 11-10 كما عُدّلت بالأمر 21-13", tool:"presTool"},
+   {id:"e-apc", title:"صلاحيات المجلس الشعبي البلدي ورئيسه", lead:"الرئيس يعمل بقبعتين: ممثلاً للبلدية، وممثلاً للدولة في إقليمها.",
+    acc:[
+     ["المجلس الشعبي البلدي (هيئة المداولة)","<ul><li>يعدّ برامجه السنوية والمتعددة السنوات الموافقة لعهدته ويصادق عليها وينفذها، بانسجام مع المخطط الولائي والوطني للتهيئة.</li><li>يبدي رأياً مسبقاً في كل مشروع استثمار أو تجهيز على إقليم البلدية.</li><li>التعمير: يتأكد من احترام تخصيصات الأراضي وقواعد استعمالها، ويحمي التراث العمراني.</li><li>التربية: إنجاز مؤسسات التعليم الابتدائي وصيانتها، المطاعم المدرسية، النقل المدرسي.</li><li>النظافة وحفظ الصحة: الماء الشروب، صرف المياه، النفايات المنزلية، مكافحة نواقل الأمراض، صيانة الطرقات البلدية وإشارات المرور.</li><li>يصوّت على الميزانية والحساب الإداري، ويقرر أنماط تسيير المرافق العمومية (مباشر، مؤسسة بلدية، امتياز، تفويض).</li></ul>"],
+     ["الرئيس ممثلاً للبلدية","<ul><li>يمثل البلدية في جميع التظاهرات الرسمية وأمام القضاء.</li><li>ينفذ مداولات المجلس ويرأسه ويستدعيه.</li><li>الآمر بالصرف لميزانية البلدية، ويتولى إبرام الصفقات والعقود باسمها.</li><li>يسيّر المستخدمين وأملاك البلدية ويحافظ على حقوقها.</li></ul>"],
+     ["الرئيس ممثلاً للدولة","<ul><li>ضابط الحالة المدنية (يمكنه التفويض للنواب والموظفين).</li><li>صفة ضابط الشرطة القضائية.</li><li>الضبط الإداري: النظام العام والأمن والسكينة والنظافة العمومية، تنظيم المرور، الأسواق، المقابر، البناءات المهددة بالانهيار، الوقاية من الكوارث.</li><li>تسليم رخص البناء والهدم والتجزئة في الحالات التي يحددها قانون التعمير.</li><li>يمكنه تسخير الأشخاص والممتلكات في حالات الخطر الجسيم.</li></ul>"],
+     ["حلول الوالي","إذا امتنع الرئيس عن اتخاذ القرارات الموكلة له قانوناً، يمكن للوالي بعد إعذار يبقى دون جدوى أن يحل محله في القيام بها، خاصة في مجال النظام العام والميزانية."]
+    ], ref:"القانون 11-10: 77 و81 (تمثيل البلدية والأمر بالصرف)، 85 و86 و92 (تمثيل الدولة)، 94 و95 (الضبط والتعمير)، 100 و101 (حلول الوالي)، 107 و108 و113 و123 و149 (صلاحيات المجلس)"},
+   {id:"e-apw", title:"المجلس الشعبي الولائي والوالي", lead:"ثنائية: مجلس منتخب يتداول، ووالٍ معيَّن ينفذ ويمثل الدولة.",
+    cards:[
+     {t:"المجلس الشعبي الولائي", b:"<ul><li>4 دورات عادية في السنة، لا تتعدى كل منها 15 يوماً.</li><li>يتداول في التنمية الاقتصادية والاجتماعية، الفلاحة والري، الطرق الولائية، السكن، التجهيزات التربوية والتكوين، النشاط الاجتماعي والثقافي.</li><li>يشكّل لجاناً دائمة (التربية، الاقتصاد والمالية، الصحة والبيئة، التهيئة والنقل، التعمير والسكن، الري والفلاحة، الشؤون الاجتماعية، التنمية المحلية والتشغيل…).</li><li>لكل عضو توجيه سؤال كتابي إلى مديري المصالح غير الممركزة للدولة في الولاية، وعليهم الرد كتابياً خلال 15 يوماً.</li></ul>", ref:"القانون 12-07: المادة 14 (الدورات في مارس وجوان وسبتمبر وديسمبر)، 33 (اللجان)، 37 (الأسئلة الكتابية)"},
+     {t:"الوالي", b:"<ul><li>ممثل الدولة ومندوب الحكومة في الولاية.</li><li>ينفذ مداولات المجلس الشعبي الولائي ويقدم في كل دورة عادية تقريراً عن تنفيذها.</li><li>الآمر بالصرف لميزانية الولاية.</li><li>مسؤول عن المحافظة على النظام والأمن والسلامة والسكينة العمومية.</li><li>يمارس الرقابة الإدارية على مداولات المجالس الشعبية البلدية.</li></ul>", ref:"القانون 12-07، المواد 102 وما بعدها و110 و114"},
+     {t:"نفاذ مداولات الولاية", b:"<p>تصبح نافذة بعد 21 يوماً من إيداعها لدى الولاية. تخضع لمصادقة وزير الداخلية خلال شهرين: الميزانيات والحسابات، التنازل عن العقارات واقتناؤها وتبادلها، اتفاقيات التوأمة، الهبات والوصايا الأجنبية.</p>", ref:"القانون 12-07، المادتان 54 و55"},
+     {t:"انتخاب رئيس المجلس الولائي", b:"<p>تطبق القواعد نفسها: مرشح من القائمة ذات الأغلبية المطلقة للمقاعد، وإلا القوائم الحائزة على 35% على الأقل، وإلا جميع القوائم. ثم اقتراع سري بالأغلبية المطلقة ودور ثانٍ عند الاقتضاء.</p>", ref:"قانون الولاية كما عُدّل سنة 2021"}
+    ]},
+   {id:"e-delib", title:"سير الدورات والمداولات", lead:"أغلب الطعون في المداولات سببها خلل إجرائي. هذه القواعد الأساسية لمجلس بلدي.",
+    cards:[
+     {t:"الدورات", b:"<ul><li>دورة عادية كل شهرين، لا تتعدى 5 أيام.</li><li>دورة غير عادية بطلب من الرئيس أو ثلثي الأعضاء أو الوالي.</li><li>يُرسل الاستدعاء مع جدول الأعمال قبل 10 أيام كاملة (يوم واحد في الاستعجال)، ويُلصق جدول الأعمال للجمهور.</li></ul>", ref:"القانون 11-10، المواد 16 و17 و21 و22"},
+     {t:"النصاب والتصويت", b:"<ul><li>لا تصح الجلسة إلا بحضور الأغلبية المطلقة للأعضاء الممارسين.</li><li>إن لم يكتمل النصاب: استدعاء ثانٍ بفارق 5 أيام كاملة، وتصح المداولة حينها مهما كان عدد الحاضرين.</li><li>تُتخذ المداولات بالأغلبية البسيطة للحاضرين أو الممثَّلين بوكالة؛ وعند التساوي يرجّح صوت الرئيس.</li></ul>", ref:"القانون 11-10، المادتان 23 و54"},
+     {t:"العلنية", b:"<p>جلسات المجلس علنية ومفتوحة للمواطنين. يجوز عقدها مغلقة لدراسة الحالات التأديبية للمنتخبين ومسائل الحفاظ على النظام العام.</p>", ref:"القانون 11-10، المادة 26"},
+     {t:"النفاذ والمصادقة", b:"<ul><li>تنفذ المداولة بقوة القانون بعد 21 يوماً من إيداعها بالولاية.</li><li>تخضع للمصادقة الصريحة للوالي: الميزانيات والحسابات، قبول الهبات والوصايا الأجنبية، اتفاقيات التوأمة، التنازل عن الأملاك العقارية للبلدية.</li></ul>", ref:"القانون 11-10، المادتان 56 و57"},
+     {t:"البطلان", b:"<ul><li>بطلان بقوة القانون: المداولات المخالفة للدستور أو غير المطابقة للقوانين والتنظيمات، الماسة برموز الدولة، أو غير المحررة باللغة العربية.</li><li>باطلة كذلك: المداولة التي حضرها الرئيس أو عضو في وضعية تعارض مصالحه مع مصالح البلدية (شخصياً أو عبر أقاربه أو بصفته وكيلاً)، ويعاين الوالي البطلان بقرار.</li></ul><p class='note'>الرئيس يحق له الطعن قضائياً في قرار الوالي المتعلق بالبطلان أو رفض المصادقة.</p>", ref:"القانون 11-10، المواد 59 إلى 61"}
+    ]},
+   {id:"e-ri", title:"النظام الداخلي النموذجي للمجالس المنتخبة", lead:"أول نص يصادق عليه المجلس الجديد. ملخص مطابق للمرسومين التنفيذيين 13-105 (البلدي) و13-217 (الولائي) كما نُشرا في الجريدة الرسمية.",
+    cards:[
+     {t:"النصان المرجعيان", b:"<ul><li><b>المرسوم التنفيذي 13-105</b> المؤرخ في 17 مارس 2013، المتضمن النظام الداخلي النموذجي للمجلس الشعبي البلدي (ج.ر عدد 15)، تطبيقاً للمادة 16 من القانون 11-10. 45 مادة وملحق (نموذج وكالة).</li><li><b>المرسوم التنفيذي 13-217</b> المؤرخ في 18 جوان 2013، المتضمن النظام الداخلي النموذجي للمجلس الشعبي الولائي (ج.ر عدد 32)، تطبيقاً للمادة 13 من القانون 12-07. 45 مادة وملحق.</li><li>النموذج إطار يكيّف فيه كل مجلس نظامه ويصادق عليه بمداولة، في حدود القوانين والتنظيمات (المادة 2 من كل مرسوم).</li></ul>", ref:"الجريدة الرسمية 2013، العددان 15 و32"},
+     {t:"المصادقة والنفاذ والتعديل", b:"<ul><li>يُرسل النظام الداخلي إلى الوالي مرفقاً بمستخرج مداولة المصادقة، ويدخل حيز التنفيذ بموافقة الوالي أو بعد 21 يوماً على الأكثر من إيداعه بالولاية.</li><li>إذا رفضه الوالي أو أبدى تحفظات لعدم المطابقة، يُعاد إلى المجلس لقراءة ثانية؛ وفي المجلس الولائي يرفع الوالي دعوى قضائية إن لم يُصحَّح.</li><li>بعد النفاذ يعرضه الرئيس على الأعضاء وتُسلَّم نسخة لكل عضو.</li><li>يُعدَّل بالأشكال نفسها، باقتراح من الرئيس أو من الأغلبية المطلقة للأعضاء.</li></ul>", ref:"13-105: المواد 42 إلى 44 · 13-217: المادتان 43 و44"}
+    ],
+    acc:[
+     ["الرئاسة والنواب (13-105: 3 و4 · 13-217: 3 إلى 7)","<ul><li>يترأس الرئيس المجلس ويستدعيه ويرأس دوراته ويُطلعه على تنفيذ المداولات.</li><li>يختار الرئيس نوابه ويعرضهم على المجلس للمصادقة <b>بالأغلبية المطلقة</b>، <b>ولا يوجد أي ترتيب أو تدرج سلمي بين النواب</b>.</li><li>رئيس المجلس الشعبي البلدي يرتدي الوشاح بالألوان الوطنية وجوباً في المراسم والتظاهرات الرسمية.</li><li><b>الولائي:</b> للرئيس ديوان من موظفين يختارهم ويضعهم الوالي تحت تصرفه، ويرأس <b>المكتب الدائم</b> للمجلس الذي يشارك في إعداد مشروع جدول الأعمال، وينسق بين اللجان، ويطّلع على نزاعات الاختصاص بينها، ويقيّم نشاط المجلس.</li></ul>"],
+     ["الدورات وجدول الأعمال (13-105: 5 إلى 7 · 13-217: 8 و9)","<ul><li><b>البلدي:</b> دورة عادية كل شهرين، تُختتم باستنفاد جدول الأعمال أو بعد 5 أيام على الأكثر من افتتاحها.</li><li><b>الولائي:</b> 4 دورات عادية في السنة، تُختتم باستنفاد جدول الأعمال أو بعد 15 يوماً على الأكثر.</li><li>دورات غير عادية لقضايا غير متوقعة لا تحتمل انتظار الدورة العادية؛ وفي الاجتماع بقوة القانون (كارثة) يلتحق الأعضاء بالمقر فوراً.</li><li>جدول الأعمال: يضبطه رئيس البلدية بعد استشارة نوابه وبحضور الأمين العام ورؤساء اللجان الدائمة المعنيين؛ وفي الولاية يضبطه رئيس المجلس <b>والوالي</b> بعد استشارة المكتب الدائم.</li><li>يصادق المجلس على جدول الأعمال عند الافتتاح، ويمكن إدراج نقاط إضافية بطلب من الرئيس أو أغلبية الأعضاء، ولا يُدرج تحت «مسائل متنوعة» أي موضوع ذي أهمية كبرى.</li></ul>"],
+     ["الاستدعاء والنصاب (13-105: 8 إلى 10 · 13-217: 10 و11)","<ul><li>يحدد الاستدعاء التاريخ والساعة وجدول الأعمال ويُشار إليه في سجل المداولات، <b>ولا يجوز تعديله بعد إرساله تحت طائلة بطلان المداولات</b>.</li><li>يُسلَّم بمقر سكن العضو مقابل وصل استلام، ويمكن إرساله إضافياً بالبريد الإلكتروني بطلب صريح من العضو.</li><li>النصاب: حضور فعلي لأكثر من نصف الأعضاء الممارسين، ويشترط عند الاستدعاء الأول فقط؛ وإلا استدعاء ثانٍ بفارق 5 أيام كاملة على الأقل وتصح المداولات مهما كان عدد الحاضرين.</li><li><b>الوكالات لا تُحتسب في النصاب، وانسحاب عضو أثناء الجلسة لا يؤثر فيه.</b></li></ul>"],
+     ["سير الجلسات والجمهور (13-105: 11 إلى 16 · 13-217: 12 إلى 18)","<ul><li>للدورات طابع تشريفي في إطار احترام مقومات الدولة ورموزها: <b>تُفتتح أول دورة في السنة وتُختتم آخر دورة بالنشيد الوطني</b>.</li><li>تُفتتح الجلسة بعد ربع ساعة على الأكثر من الموعد المحدد، إلا في حالة القوة القاهرة.</li><li>تُعقد الدورات وجوباً بالمقر الرئيسي (البلدية أو الولاية)، ويتأكد الرئيس من تسلّم كل عضو للوثائق اللازمة.</li><li>الجلسات علنية في حدود الأماكن المتوفرة، ولا يدخل غير الأعضاء الفضاء المخصص لهم؛ يلتزم الجمهور الصمت تحت طائلة الطرد.</li><li>جلسات مغلقة للنظام العام والحالات التأديبية (البلدي)، وللحالات التأديبية خصوصاً (الولائي)، مع واجب سرية المناقشات.</li><li><b>الولائي:</b> ينتخب المجلس في كل دورة، باقتراح من رئيسه، <b>مكتب دورة</b> من عضوين إلى أربعة.</li></ul>"],
+     ["ضبط المناقشات (13-105: 17 إلى 19 · 13-217: 19 إلى 21)","<ul><li>يمنح الرئيس الكلمة حسب قائمة المتدخلين المعدّة مسبقاً، ثم لمن يطلبها في حدود الوقت المخصص لكل نقطة.</li><li><b>لا يمكن أخذ الكلمة خلال عمليات التصويت.</b></li><li>العقوبات بالتدرج: التذكير الشفوي بالنظام ← التذكير بالنظام مع التسجيل في المحضر (لمن ذُكّر شفوياً في الجلسة نفسها) ← سحب الكلمة مع التسجيل في المحضر ← توقيف الجلسة لفترة محددة ← رفع الجلسة إذا تمادى العضو.</li><li>يُمنع استعمال أي جهاز يخل بسير الأشغال، إلا ما رخّص به الرئيس صراحة كدعامة لوجيستية.</li></ul>"],
+     ["أمانة الجلسة (13-105: 20 · 13-217: 22)","<ul><li><b>البلدي:</b> الأمين العام للبلدية، وإن تعذر فموظف يعيّنه الرئيس: يساعد في التأكد من النصاب ومراقبة الوكالات وعدّ الأصوات، ويعدّ المحضر ويدوّن المداولات في السجل.</li><li><b>الولائي:</b> موظف يعيّنه الرئيس من بين موظفي ديوانه، ويحرر محضر الجلسة.</li></ul>"],
+     ["الوكالة (13-105: 21 و22 · 13-217: 23 و24)","<ul><li>الحضور الفعلي هو الأصل؛ ويمكن للعضو الذي حال مانع دون حضوره توكيل عضو يختاره بوكالة اسمية كتابية <b>وفق النموذج الملحق بالمرسوم</b>، مصادق عليها لدى سلطة مؤهلة.</li><li>في الاستعجال القصوى أو المانع غير المتوقع: وكالة يشهد عليها عضو آخر أو الأمين العام للبلدية (أو رئيس ديوان رئيس المجلس الولائي)، استثناءً.</li><li>العضو المجبر على الانسحاب قبل التصويت يوكّل زميلاً بوكالة يؤشّر عليها رئيس الجلسة أو أمينها (أو عضو في مكتب الدورة بالولاية).</li><li>وكالة واحدة لكل عضو، لجلسة أو دورة واحدة؛ تُسحب بزوال المانع، لكن لا تُسحب لجلسة شُرع فيها.</li><li>تبيّن الوكالة تاريخها وتوقيعها والجلسة أو الدورة واسمي الموكل والوكيل؛ <b>الأصلية فقط</b>، لا نسخة ولا فاكس ولا بريد إلكتروني.</li></ul>"],
+     ["التصويت (13-105: 23 إلى 26 · 13-217: 25 و26)","<ul><li>بالأغلبية البسيطة للحاضرين أو الممثَّلين، وعند التساوي يرجّح صوت الرئيس.</li><li>القاعدة رفع اليد: يحصي الرئيس والأمين الموافقين وغير الموافقين والممتنعين، ويصرّح الوكلاء بصوت عالٍ بمدلول تصويتهم باسم موكليهم.</li><li>الاقتراع السري بطلب من ثلثي (2/3) الأعضاء، ويعلن الرئيس نتائجه.</li><li>تُدوَّن النتائج في سجل المداولات مع بيان مدلول التصويت.</li></ul>"],
+     ["المحضر والمداولة وتعارض المصالح (13-105: 27 إلى 31 · 13-217: 27 إلى 30)","<ul><li>يعد الأمين محضراً بالعربية يتضمن أهم الآراء (وفي الولاية آراء الهيئة التنفيذية وممثلي الإدارة أيضاً)، ويُعرض للتوقيع أثناء الجلسة على الحاضرين.</li><li>المداولة بالعربية، بحبر غير قابل للمحو، برقم يتكون من السنة ورقم تسلسلي، وتتضمن: نوع الدورة، التاريخ والتوقيت، اسم الرئيس، الحاضرين والممثلين والغائبين، الأمانة، جدول الأعمال، الظروف والدوافع، القرار ونتائج التصويت، توقيع الأعضاء.</li><li>الرئيس أو العضو المعني بموضوع المداولة (شخصياً أو عبر زوجه أو أصوله أو فروعه إلى الدرجة الرابعة أو كوكيل) <b>ينسحب من الجلسة، وإلا تبطل المداولة بقوة القانون</b>.</li><li>البلدي: عضو الهيئة التنفيذية في وضعية تعارض لا يتدخل في تنفيذ المداولة، ولا يمثل البلدية في نزاع يتعلق بها؛ يعيّن المجلس ممثلاً من بين النواب أو الأعضاء.</li><li>يوقّع الرئيس أو مستخلفه مستخرج المداولة ويُرسل إلى الوالي.</li></ul>"],
+     ["النشر وسجل المداولات (13-105: 32 إلى 37 · 13-217: 31 إلى 36)","<ul><li>يُعلَّق مستخرج المداولة ذات الأحكام العامة خلال 8 أيام من نفاذها في أماكن الإلصاق (مقر البلدية وملحقاتها ومندوبياتها، أو مقر الولاية)، ويمكن نشره رقمياً؛ ويُبلَّغ المستخرج ذو الطابع الفردي للمعنيين؛ ولا تُنشر مداولات الجلسات المغلقة.</li><li>أماكن التعليق محمية بواجهات زجاجية أو شبابيك معدنية، والتعليق شهراً واحداً على الأقل أو حتى نفاد آجال الطعن.</li><li>السجل أوراق مترابطة مثبتة بشريط قماشي ومرقّمة؛ تلي كل مداولة قائمة الحاضرين والممثلين ويوقّع كل عضو قبالة اسمه؛ بلا حشو ولا كشط، ويُشطب الفراغ بين مداولتين بخط مائل.</li><li>يمسكه الأمين العام للبلدية (أو رئيس ديوان رئيس المجلس الولائي)، ويُقفل بخطين أفقيين في نهاية كل سنة أو العهدة، ويمكن نسخه رقمياً.</li></ul>"],
+     ["اللجان (13-105: 38 إلى 41 · 13-217: 37 إلى 42)","<ul><li>اللجان الدائمة بمداولة <b>بالأغلبية المطلقة</b> باقتراح من الرئيس (وفي الولاية أيضاً باقتراح الأغلبية المطلقة للأعضاء). في البلدية يتناسب عددها مع عدد السكان ويشمل مجالها 5 ميادين، ويمكن للجنة واحدة التكفل بعدة ميادين.</li><li>اللجان الخاصة بمداولة بالأغلبية المطلقة لقضايا محددة زمنياً، وتُحل فور استنفاد موضوعها (أو انقضاء أجلها في الولاية).</li><li><b>الولائي:</b> لجنة تحقيق بطلب من الرئيس أو ثلث الأعضاء الممارسين، بمداولة بالأغلبية المطلقة، وتبدأ أشغالها بعد إعلام وزير الداخلية ونفاذ المداولة.</li><li>تعكس تشكيلة اللجان التركيبة السياسية للمجلس؛ لا يكون العضو في أكثر من لجنتين دائمتين، ولا يرأس أكثر من لجنة واحدة (وفي الولاية لا يكون في أكثر من لجنة خاصة واحدة في الوقت نفسه).</li><li>تنتخب كل لجنة رئيساً ونائباً ومقرراً، وتجتمع بطلب من رئيسها أو أغلبية أعضائها بعد إعلام رئيس المجلس؛ جلساتها غير علنية وبالمقر.</li><li>تعمل بين الدورات وفق رزنامة لا تتداخل مع الدورات العادية، وتتوقف تلقائياً أثناء الدورات غير العادية.</li></ul>"]
+    ], ref:"المرسوم التنفيذي 13-105 (ج.ر 15، 17 مارس 2013) · المرسوم التنفيذي 13-217 (ج.ر 32، 23 جوان 2013)",
+    compare:[["عدد الدورات العادية","كل شهرين","4 في السنة"],["المدة القصوى للدورة","5 أيام","15 يوماً"],["ضبط جدول الأعمال","الرئيس بعد استشارة نوابه","الرئيس والوالي بعد استشارة المكتب الدائم"],["أمانة الجلسة","الأمين العام للبلدية","موظف من ديوان الرئيس"],["ماسك سجل المداولات","الأمين العام للبلدية","رئيس ديوان رئيس المجلس"],["هيئات خاصة بالمجلس","لا يوجد","المكتب الدائم، مكتب الدورة، لجنة التحقيق"],["الإرسال للمصادقة","الوالي","الوالي (ومصادقة وزير الداخلية على مداولات المادة 55)"]],
+    proxy:true,
+    checklist:["تنصيب المجلس بدعوة من الوالي خلال 8 أيام من إعلان النتائج النهائية","انتخاب الرئيس خلال 5 أيام من التنصيب","توقيع محضر تسليم المهام خلال 8 أيام من التنصيب","عرض النواب على المجلس للمصادقة بالأغلبية المطلقة","المصادقة على النظام الداخلي في الدورة الأولى وفق المرسوم 13-105 (أو 13-217)","إرسال النظام الداخلي ومستخرج المداولة إلى الوالي","تسليم نسخة من النظام الداخلي النافذ لكل عضو","تشكيل اللجان الدائمة بمداولة بالأغلبية المطلقة","التصريح بالممتلكات (القانون 06-01)","ضبط رزنامة الدورات العادية والدورة المالية قبل 31 أكتوبر"]},
+   {id:"e-budget", title:"الميزانية والمالية المحلية", lead:"رزنامة مالية ملزمة: التأخر فيها يفتح باب حلول الوالي.",
+    timeline:[
+     ["قبل 31 أكتوبر (السنة السابقة)","التصويت على الميزانية الأولية للسنة الموالية (المادة 181). مشروعها يعدّه الأمين العام تحت سلطة الرئيس (المادة 180)."],
+     ["قبل 15 جوان","التصويت على الميزانية الإضافية لسنة التنفيذ، لتعديل التقديرات حسب نتائج السنة السابقة (المادتان 177 و181)."],
+     ["بعد 31 مارس (نهاية الفترة التكميلية)","يعدّ الرئيس الحساب الإداري للسنة المنقضية ويعرضه على المجلس للمصادقة، بالتقريب مع حساب التسيير (المادتان 187 و188)."],
+     ["على مدار السنة","الميزانية قسمان (تسيير، تجهيز واستثمار) متوازنان وجوباً، مع اقتطاع من التسيير لفائدة التجهيز (المادة 179)، وتسجيل النفقات الإجبارية."]
+    ],
+    cards:[
+     {t:"إذا تعثرت الميزانية", b:"<ul><li><b>ميزانية غير متوازنة أو دون النفقات الإجبارية:</b> لا يمكن المصادقة عليها. يعيدها الوالي بملاحظاته خلال 15 يوماً، فيعرضها الرئيس لمداولة ثانية خلال 10 أيام؛ وإن صُوّت عليها مجدداً دون توازن يُعذَر المجلس، فإن لم يصوّت خلال 8 أيام يضبطها الوالي تلقائياً (المادة 183).</li><li><b>عجز في التنفيذ:</b> على المجلس امتصاصه وضمان توازن الميزانية الإضافية، وإلا اتخذ الوالي الإجراءات وقد يأذن بامتصاصه على سنتين أو أكثر (المادة 184).</li><li><b>عدم ضبط الميزانية قبل بداية السنة:</b> يستمر العمل بإيرادات ونفقات السنة السابقة العادية، ولا يُلتزم بالنفقات إلا في حدود 1/12 شهرياً من اعتمادات السنة السابقة (المادة 185).</li><li><b>اختلال داخل المجلس يمنع التصويت:</b> يستدعي الوالي دورة غير عادية، فإن تعذر ضبطها الوالي نهائياً (المادة 186).</li></ul>", ref:"القانون 11-10، المواد 183 إلى 186 · وفي الولاية المواد 165 إلى 169 من القانون 12-07"},
+     {t:"مصادر الإيرادات", b:"<ul><li>الجباية والرسوم المحلية المخصصة للبلدية.</li><li>مداخيل الممتلكات والخدمات (إيجارات، أسواق، حظائر…).</li><li>الإعانات والمخصصات، وموارد صندوق التضامن والضمان للجماعات المحلية.</li><li>الهبات والوصايا، والقروض للاستثمار المنتج.</li></ul>", ref:"القانون 11-10، المواد 169 إلى 175"},
+     {t:"الصفقات العمومية", b:"<p>الرئيس بصفته آمراً بالصرف يلتزم بقواعد القانون 23-12 المحدد للقواعد العامة المتعلقة بالصفقات العمومية: حرية الوصول، المساواة في المعاملة، الشفافية، ولجان فتح الأظرفة وتقييم العروض.</p><p class='warn'>جرائم الصفقات (المحاباة، تلقي الهدايا، تعارض المصالح) يعاقب عليها قانون الوقاية من الفساد 06-01.</p>", ref:"القانون 23-12 (5 أوت 2023) · القانون 06-01"},
+     {t:"الرقابة المالية", b:"<ul><li>رقابة الوالي على المداولات المالية.</li><li>المراقب المالي (رقابة قبلية للالتزام بالنفقات).</li><li>أمين الخزينة البلدية (المحاسب العمومي).</li><li>مجلس المحاسبة والمفتشية العامة للمالية (رقابة بعدية).</li></ul>", ref:"مبدأ الفصل بين الآمر بالصرف والمحاسب العمومي"}
+    ]},
+   {id:"e-status", title:"وضعية المنتخب: حقوق، واجبات، ومخاطر", lead:"العهدة تكليف قبل أن تكون تشريفاً.",
+    acc:[
+     ["الحقوق","<ul><li>العهدة مجانية، مع علاوات وتعويضات بمناسبة الدورات، وانتداب الرئيس والنواب ومن يتفرغ (المادة 37 والمرسوم التنفيذي 13-91).</li><li>على المستخدِم أن يمنح المنتخب الوقت اللازم لعهدته؛ والاستدعاء للدورات والتكوين غياب مبرر، ولا يكون سبباً لفسخ عقد العمل، ويحتفظ المنتخب بحقوق مساره المهني (المادة 38).</li><li>الحماية من التهديد والإهانة بسبب المهام، وتتحمل البلدية التعويض عن الأضرار المرتبطة بممارسة العهدة.</li><li>الحق في الإعلام والتكوين المرتبط بمهامه.</li></ul>"],
+     ["الواجبات","<ul><li>حضور الدورات والمشاركة في اللجان.</li><li>متابعة دورات التكوين وتحسين المستوى المنظمة لصالحه (المادة 39).</li><li>التصريح بالممتلكات عند بداية العهدة ونهايتها (القانون 06-01).</li><li>الامتناع عن حضور مداولة له فيها مصلحة شخصية.</li><li>احترام سرية الجلسات المغلقة وواجب التحفظ.</li></ul>"],
+     ["التوقيف والإقصاء","<ul><li>التوقيف بقرار من الوالي للمنتخب المتابع قضائياً بجناية أو جنحة لها صلة بالمال العام أو مخلة بالشرف، إلى غاية صدور حكم نهائي.</li><li>الإقصاء بقوة القانون عند إدانة جزائية نهائية.</li><li>يُعتبر مستقيلاً تلقائياً من تغيب دون عذر مقبول عن أكثر من ثلاث دورات عادية خلال السنة نفسها، بعد سماعه.</li><li>الاستخلاف خلال شهر بالمترشح الموالي لآخر منتخب من القائمة نفسها، بقرار من الوالي.</li><li>في حالة البراءة يستأنف المنتخب الموقوف مهامه تلقائياً.</li></ul>"],
+     ["حل المجلس","يُحل بمرسوم رئاسي في حالات منها: خرق الأحكام الدستورية، إلغاء انتخاب جميع الأعضاء، الاستقالة الجماعية، الاختلالات الخطيرة، نزول عدد المنتخبين تحت الأغلبية المطلقة رغم الاستخلاف، الخلافات الخطيرة التي تعطل السير العادي، الدمج أو التجزئة. يعيّن الوالي متصرفاً خلال 10 أيام، وتنظم انتخابات خلال أجل أقصاه 6 أشهر."]
+    ], ref:"القانون 11-10: المواد 40 إلى 45 (الزوال، الاستخلاف، التوقيف، الإقصاء، الاستقالة التلقائية)، 46 و48 و49 (الحل) · القانون 06-01"},
+   {id:"e-campaign", title:"قواعد الحملة الانتخابية", lead:"تنطلق قبل ثلاثة أسابيع من الاقتراع وتنتهي قبل ثلاثة أيام منه، ثم صمت انتخابي.",
+    cards:[
+     {t:"المسموح", b:"<ul><li>التجمعات في الأماكن المرخصة، والملصقات في الأماكن المخصصة.</li><li>الحيز الزمني في وسائل الإعلام العمومية وفق القرعة التي تجريها السلطة المستقلة.</li><li>الحملة الرقمية بما يحترم القانون والآداب.</li></ul>", ref:"قرعة توزيع الحيز الزمني لمحليات 2026 جرت يوم 29 أكتوبر 2026"},
+     {t:"الممنوع", b:"<ul><li>استعمال أملاك ووسائل الإدارة والمؤسسات العمومية.</li><li>استعمال أماكن العبادة والمؤسسات التعليمية لأغراض الحملة.</li><li>خطاب الكراهية والتمييز والتشهير، والاستعمال السيئ لرموز الدولة.</li><li>استعمال اللغات الأجنبية في الحملة.</li><li>أي نشاط دعائي خلال فترة الصمت الانتخابي.</li></ul>", ref:"الأمر 21-01، الباب المتعلق بالحملة الانتخابية"},
+     {t:"التمويل", b:"<ul><li>مصادر مشروعة فقط: مساهمات الأحزاب، المساهمة الشخصية، هبات الأشخاص الطبيعيين في حدود السقف القانوني.</li><li>يُمنع منعاً باتاً التمويل الأجنبي، وتمويل الأشخاص المعنوية.</li><li>فتح حساب بنكي وتعيين أمين مالي للحملة، وتسليم إيصالات الهبات.</li><li>إيداع حساب الحملة لدى لجنة مراقبة تمويل الحملات في الآجال.</li></ul>", ref:"تجاوز السقف أو إخفاء مصدر التمويل يعرض للعقوبات وإلغاء النتائج"}
+    ]},
+   {id:"e-draft", title:"المستجدات المرتقبة", lead:"مشروعا قانوني البلدية والولاية الجديدين لم يصدرا بعد. ما يلي مأخوذ من المسودات المتداولة وقد يتغير.",
+    cards:[
+     {t:"الوضعية إلى غاية 27 أكتوبر 2026", b:"<p>الحكومة تواصل إنضاج المشروعين ومنحت مهلة 30 يوماً لتوسيع الاستشارة، بينما تطالب أحزاب بالتعجيل بهما قبل المحليات. المشروعان مدرجان ضمن 22 نصاً في جدول دورة البرلمان 2026-2027.</p><p class='note'>المجالس المنتخبة يوم 28 نوفمبر ستباشر عهدتها في ظل القانونين 11-10 و12-07 إلى حين صدور الجديدين.</p>", ref:"الوضعية مأخوذة من الصحافة الوطنية (أكتوبر 2026)"},
+     {t:"أبرز ما في مسودة قانون البلدية", b:"<ul><li>نحو 288 مادة في 6 أبواب.</li><li>هيئة تشاركية لدى كل بلدية تضم فاعلين اقتصاديين وجمعويين وممثلين عن الأحياء.</li><li>انتخاب الرئيس: المترشح الحائز على أكثر الأصوات في القائمة الفائزة بأكبر عدد من الأصوات، للحد من التحالفات والانسداد.</li><li>الأمين العام آمراً بالصرف مفوّضاً لتنفيذ الميزانية.</li><li>تصنيف البلديات (حضرية، شبه حضرية، ريفية) وتضامن مالي بينها.</li><li>أداء اليمين في جلسة علنية، وشرطة بلدية تحت سلطة الرئيس.</li></ul>", ref:"مسودة لم يُصادق عليها بعد"}
+    ]},
+   {id:"e-quiz", title:"اختبر معارفك", lead:"عشرة أسئلة سريعة عن قواعد عمل المجالس.", quiz:"elected"}
+  ]
+ },
+ citizen: {
+  label:"المواطن",
+  sections:[
+   {id:"c-why", title:"لماذا تنتخب مجلسك المحلي؟", lead:"البلدية أقرب إدارة إليك. ما يقرره مجلسها يمس يومك مباشرة.",
+    cards:[
+     {t:"ما تنتخبه بالضبط", b:"<p>ورقتان في يوم واحد: قائمة للمجلس الشعبي البلدي، وقائمة للمجلس الشعبي الولائي. لعهدة 5 سنوات. ومن أعضاء هذين المجلسين يُنتخب ثلثا أعضاء مجلس الأمة.</p>", ref:"الدستور المعدّل 2026 · الأمر 21-01"},
+     {t:"ما يقرره المجلس البلدي", b:"<ul><li>المدارس الابتدائية والمطاعم والنقل المدرسي.</li><li>النظافة ورفع النفايات والإنارة العمومية.</li><li>الطرقات البلدية والأرصفة والإشارات.</li><li>الأسواق الجوارية والمساحات الخضراء والملاعب.</li><li>البرامج التنموية للبلدية وأولويات ميزانيتها.</li></ul>", ref:"القانون 11-10"},
+     {t:"ما يقرره المجلس الولائي", b:"<ul><li>توزيع مشاريع التنمية بين بلديات الولاية.</li><li>الطرق الولائية، التجهيزات التربوية والتكوين.</li><li>دعم الفلاحة والري والسكن والتضامن.</li><li>مساءلة مديري القطاعات في الولاية.</li></ul>", ref:"القانون 12-07"}
+    ], tool:"eligibility"},
+   {id:"c-day", title:"يوم الاقتراع خطوة بخطوة", lead:"السبت 28 نوفمبر 2026، من الثامنة صباحاً إلى السابعة مساءً كقاعدة عامة.",
+    timeline:[
+     ["قبل الذهاب","تأكد من مكتب تصويتك عبر بطاقة الناخب أو خدمات السلطة المستقلة. خذ بطاقة التعريف الوطنية أو أي وثيقة رسمية تثبت هويتك."],
+     ["عند المدخل","يتحقق أعضاء المكتب من هويتك وتسجيلك في القائمة."],
+     ["خذ أوراق التصويت","تأخذ ورقة عن كل قائمة مترشحة وظرفاً، لكل من المجلس البلدي والمجلس الولائي."],
+     ["داخل المعزل","وحدك. تضع في الظرف ورقة قائمة واحدة، ويمكنك التأشير على مترشح أو أكثر من القائمة نفسها في حدود عدد المقاعد."],
+     ["عند الصندوق","تضع الظرف في الصندوق الشفاف، توقّع على قائمة التوقيعات، ويُختم على بطاقتك."],
+     ["الفرز","الفرز علني في المكتب نفسه فور الاختتام، ويحق للناخبين حضوره. يحق لك تدوين احتجاجك على صحة العمليات في محضر الفرز."]
+    ], ref:"الأمر 21-01، أحكام عمليات التصويت والفرز", tool:"ballotSim"},
+   {id:"c-proxy", title:"التصويت بالوكالة", lead:"إذا تعذر عليك الحضور لسبب يحدده القانون، يمكنك توكيل ناخب آخر.",
+    cards:[
+     {t:"من يحق له التوكيل", b:"<ul><li>المرضى في المستشفيات أو في البيت، وذوو العجز الكبير.</li><li>العمال والمستخدمون المتنقلون أو العاملون خارج ولاية إقامتهم يوم الاقتراع.</li><li>الطلبة والمتربصون الدارسون خارج ولاية إقامتهم.</li><li>أفراد الجيش وأسلاك الأمن والحماية المدنية المرابطون في مهامهم.</li><li>المواطنون الموجودون مؤقتاً بالخارج.</li></ul>", ref:"الأمر 21-01، أحكام التصويت بالوكالة"},
+     {t:"كيف", b:"<ul><li>تُعد الوكالة بعقد أمام رئيس اللجنة البلدية للمراجعة أو الجهات المؤهلة قانوناً، أو القنصلية بالخارج.</li><li>وكالة واحدة للوكيل الواحد، ويجب أن يكون الوكيل مسجلاً في البلدية نفسها.</li><li>تنتهي الإمكانية قبل يوم الاقتراع وفق الآجال المعلنة.</li></ul>", ref:"اسأل اللجنة البلدية لمراجعة القوائم عن الآجال الدقيقة"}
+    ]},
+   {id:"c-who", title:"لمن تتوجه؟ البلدية، الدائرة، الولاية أم الدولة", lead:"اختر حاجتك لتعرف الجهة المختصة وما تقوله النصوص.", tool:"finder"},
+   {id:"c-rights", title:"حقوقك في متابعة الشأن المحلي", lead:"دورك لا ينتهي عند الصندوق. القانون يمنحك أدوات رقابة ومشاركة.",
+    cards:[
+     {t:"حضور الجلسات", b:"<p>جلسات المجلس الشعبي البلدي والولائي علنية. وتُعلَّق مستخرجات المداولات في الأماكن المخصصة لإعلام الجمهور خلال 8 أيام من نفاذها، باستثناء ما يتعلق بالنظام العام والحالات التأديبية.</p>", ref:"القانون 11-10، المادتان 26 و30 · القانون 12-07"},
+     {t:"الاطلاع على المداولات", b:"<p>يحق لكل شخص الاطلاع على مستخلصات مداولات المجلس الشعبي البلدي والقرارات البلدية، والحصول على نسخة منها على نفقته.</p>", ref:"القانون 11-10، المادة 14"},
+     {t:"المشاركة والاستشارة", b:"<ul><li>يتخذ المجلس كل التدابير لإعلام المواطنين واستشارتهم في خيارات التنمية.</li><li>يمكن للمجلس الاستعانة بالخبرات والكفاءات وممثلي الجمعيات المحلية.</li><li>الدستور يشجع الديمقراطية التشاركية عبر المجتمع المدني.</li></ul>", ref:"القانون 11-10، المواد 11 إلى 13 · الدستور، المادة 16"},
+     {t:"الشكوى والتظلم", b:"<ul><li>تظلم إداري لدى رئيس البلدية ثم لدى الوالي.</li><li>وسيط الجمهورية ومندوبوه المحليون للتظلم من سوء تسيير مرفق عمومي.</li><li>الطعن أمام المحكمة الإدارية في القرارات غير المشروعة.</li><li>الإدارة ملزمة بالرد على المواطن وتعليل قراراتها.</li></ul>", ref:"المرسوم 88-131 · المرسوم الرئاسي المنشئ لوسيط الجمهورية"}
+    ]},
+   {id:"c-fraud", title:"المخالفات الانتخابية وكيف تبلّغ", lead:"صوتك ليس للبيع. والقانون يعاقب المعطي والآخذ.",
+    cards:[
+     {t:"أفعال مجرّمة", b:"<ul><li>تقديم أو قبول هبات أو وعود أو امتيازات مقابل التصويت.</li><li>التصويت أكثر من مرة أو بهوية مزورة.</li><li>الضغط أو التهديد للتأثير على اختيار الناخب.</li><li>الإخلال بسير مكتب التصويت أو إتلاف الصندوق أو الأوراق.</li><li>نشر أخبار كاذبة للتأثير على النتائج.</li></ul>", ref:"الأمر 21-01، الباب المتعلق بالأحكام الجزائية · قانون العقوبات"},
+     {t:"أين تبلّغ", b:"<ul><li>المنسق البلدي أو الولائي للسلطة الوطنية المستقلة للانتخابات.</li><li>رئيس مكتب التصويت يوم الاقتراع، مع تدوين الاحتجاج في المحضر.</li><li>وكيل الجمهورية المختص إقليمياً في الأفعال الجزائية.</li></ul>", ref:"احتفظ بالأدلة: تاريخ، مكان، شهود"},
+     {t:"الطعون في النتائج", b:"<p>للمترشحين والقوائم حق الطعن في النتائج المؤقتة أمام المحكمة الإدارية المختصة في الآجال القصيرة المحددة قانوناً، ويكون حكمها قابلاً للاستئناف أمام المحكمة الإدارية للاستئناف.</p>", ref:"الأمر 21-01، أحكام المنازعات الانتخابية"}
+    ]},
+   {id:"c-choose", title:"اختر بوعي: أسئلة تطرحها على القوائم", lead:"قبل أن تمنح صوتك التفضيلي، قيّم البرامج بأسئلة ملموسة.",
+    acc:[
+     ["عن البرنامج","<ul><li>ما المشاريع الثلاثة الأولى التي يلتزمون بها في حيّك؟ وبأي آجال؟</li><li>هل البرنامج من صلاحيات البلدية فعلاً، أم وعود تخص الدولة؟</li><li>كيف سيُموَّل: جباية محلية، إعانات، شراكات؟</li></ul>"],
+     ["عن المترشحين","<ul><li>ما خبرتهم في التسيير أو العمل الجمعوي؟</li><li>هل يقيمون في البلدية ويعرفون مشاكلها؟</li><li>من سبق له أن كان منتخباً: ما حصيلته؟ هل كان يحضر الدورات؟</li></ul>"],
+     ["عن الشفافية","<ul><li>هل يلتزمون بنشر المداولات والميزانية؟</li><li>هل يقترحون آليات لإشراك المواطنين واستشارتهم؟</li><li>كيف سيتعاملون مع تعارض المصالح؟</li></ul>"]
+    ]},
+   {id:"c-quiz", title:"اختبر معارفك", lead:"ثمانية أسئلة للناخب.", quiz:"citizen"}
+  ]
+ }
+};
+
+/* ---------- LIBRARY ---------- */
+var LIB = [
+ {n:"الدستور (2020) المعدّل بالقانون 26-04", d:"المواد 16 إلى 19: الجماعات المحلية، اللامركزية، الديمقراطية التشاركية.", s:"mod", k:"direct"},
+ {n:"القانون 11-10 المؤرخ في 22 يونيو 2011 المتعلق بالبلدية", d:"المعدّل والمتمّم بالأمر 21-13 المؤرخ في 31 أوت 2021.", s:"mod", k:"direct"},
+ {n:"القانون 12-07 المؤرخ في 21 فبراير 2012 المتعلق بالولاية", d:"المعدّل سنة 2021 في كيفية انتخاب رئيس المجلس الشعبي الولائي.", s:"mod", k:"direct"},
+ {n:"الأمر 21-01 المؤرخ في 10 مارس 2021 (القانون العضوي للانتخابات)", d:"المعدّل والمتمّم بالقانون العضوي 26-05 المؤرخ في 4 أفريل 2026.", s:"mod", k:"direct"},
+ {n:"القانون 26-06 المؤرخ في 4 أفريل 2026 المتعلق بالتنظيم الإقليمي", d:"69 ولاية و1541 بلدية؛ يعدل القانون 84-09.", s:"in", k:"direct"},
+ {n:"المرسوم الرئاسي 26-284 المؤرخ في 29 أوت 2026", d:"استدعاء الهيئة الناخبة لانتخاب أعضاء المجالس الشعبية البلدية والولائية يوم 28 نوفمبر 2026.", s:"in", k:"direct"},
+ {n:"المرسوم التنفيذي 26-282 المؤرخ في 24 أوت 2026", d:"تحديد الدوائر الانتخابية وعدد المقاعد في المجالس المحلية.", s:"in", k:"direct"},
+ {n:"مشروع قانون البلدية الجديد", d:"قيد الإنضاج والتشاور، مدرج في جدول الدورة البرلمانية 2026-2027.", s:"draft", k:"direct"},
+ {n:"مشروع قانون الولاية الجديد", d:"قيد الإنضاج والتشاور.", s:"draft", k:"direct"},
+ {n:"القانون العضوي المتعلق بالأحزاب السياسية (2026)", d:"صادق عليه المجلس الشعبي الوطني في مارس 2026؛ يحكم الأحزاب التي تزكي القوائم.", s:"in", k:"indirect"},
+ {n:"القانون 06-01 المتعلق بالوقاية من الفساد ومكافحته", d:"التصريح بالممتلكات، تعارض المصالح، جرائم الصفقات.", s:"mod", k:"indirect"},
+ {n:"القانون 23-12 المحدد للقواعد العامة للصفقات العمومية", d:"المؤرخ في 5 أوت 2023؛ يطبق على صفقات البلدية والولاية.", s:"in", k:"indirect"},
+ {n:"القانون 90-29 المتعلق بالتهيئة والتعمير", d:"المخطط التوجيهي للتهيئة والتعمير، مخطط شغل الأراضي. مع المرسوم التنفيذي 15-19 لعقود التعمير.", s:"mod", k:"indirect"},
+ {n:"القانون 90-30 المتضمن قانون الأملاك الوطنية", d:"أملاك البلدية العامة والخاصة وكيفيات تسييرها.", s:"mod", k:"indirect"},
+ {n:"القانون 01-19 المتعلق بتسيير النفايات ومراقبتها وإزالتها", d:"المخطط البلدي لتسيير النفايات المنزلية.", s:"in", k:"indirect"},
+ {n:"القانون 03-10 المتعلق بحماية البيئة في إطار التنمية المستدامة", d:"التزامات الجماعات المحلية البيئية.", s:"in", k:"indirect"},
+ {n:"القانون 06-06 المتضمن القانون التوجيهي للمدينة", d:"سياسة المدينة ودور الجماعات المحلية فيها.", s:"in", k:"indirect"},
+ {n:"المرسوم 88-131 المنظم للعلاقات بين الإدارة والمواطن", d:"واجب الإعلام والرد وتعليل القرارات.", s:"in", k:"indirect"},
+ {n:"المرسوم التنفيذي 13-105 المؤرخ في 17 مارس 2013", d:"النظام الداخلي النموذجي للمجلس الشعبي البلدي (ج.ر عدد 15، 2013).", s:"in", k:"direct"},
+ {n:"المرسوم التنفيذي 13-217 المؤرخ في 18 جوان 2013", d:"النظام الداخلي النموذجي للمجلس الشعبي الولائي (ج.ر عدد 32، 2013).", s:"in", k:"direct"},
+ {n:"المرسوم التنفيذي 13-91 المؤرخ في 25 فبراير 2013", d:"شروط انتداب المنتخبين المحليين والعلاوات الممنوحة لهم.", s:"in", k:"indirect"},
+ {n:"المرسوم التنفيذي 16-320", d:"الأحكام الخاصة بالأمين العام للبلدية.", s:"in", k:"indirect"}
+];
+
+/* ---------- QUIZZES ---------- */
+var QUIZ = {
+ elected:[
+  ["متى تصبح مداولة المجلس الشعبي البلدي نافذة بقوة القانون كقاعدة عامة؟",["فور التصويت عليها","بعد 21 يوماً من إيداعها بالولاية","بعد 30 يوماً من نشرها","بعد مصادقة وزير الداخلية"],1,"المادة 56 من القانون 11-10: 21 يوماً من الإيداع، باستثناء المداولات الخاضعة للمصادقة الصريحة."],
+  ["لم يكتمل النصاب في الاستدعاء الأول. ماذا يحدث؟",["تُلغى الدورة","يحل الوالي محل المجلس","استدعاء ثانٍ بفارق 5 أيام كاملة وتصح المداولة مهما كان عدد الحاضرين","يُتخذ القرار من الرئيس وحده"],2,"المادة 23 من القانون 11-10."],
+  ["لم تحصل أي قائمة على الأغلبية المطلقة للمقاعد. من يحق له تقديم مرشح لرئاسة البلدية؟",["متصدر القائمة الأولى فقط","القوائم الحائزة على 35% على الأقل من المقاعد","الأكبر سناً في المجلس","الوالي يعيّن الرئيس"],1,"المادة 65 من القانون 11-10 المعدلة بالأمر 21-13. إن لم تبلغ أي قائمة 35% يمكن لجميع القوائم التقديم."],
+  ["قائمة نالت 4% من الأصوات المعبّر عنها. هل تشارك في توزيع المقاعد؟",["نعم دائماً","لا، إلا إذا لم تبلغ أي قائمة عتبة 5%","نعم بمقعد واحد على الأقل","حسب قرار الوالي"],1,"عتبة 5% من الأصوات المعبّر عنها."],
+  ["ما هي المداولة الباطلة بقوة القانون؟",["المتخذة بأغلبية بسيطة","غير المحررة باللغة العربية","المتخذة في دورة غير عادية","المتخذة في جلسة علنية"],1,"المادة 59 من القانون 11-10 تذكر أيضاً المخالفة للدستور والقوانين والماسة برموز الدولة."],
+  ["آخر أجل للتصويت على الميزانية الأولية للبلدية؟",["31 ديسمبر","31 أكتوبر من السنة السابقة","15 جوان","30 جوان"],1,"الأولية قبل 31 أكتوبر، الإضافية قبل 15 جوان."],
+  ["كم توقيعاً تحتاج قائمة حرة لمجلس من 19 مقعداً؟",["570","665","950","لا تحتاج توقيعات"],1,"35 توقيعاً × 19 مقعداً = 665 توقيعاً."],
+  ["هل تُحتسب الوكالات في النصاب القانوني لانعقاد الجلسة؟",["نعم دائماً","لا، تُحتسب في التصويت فقط","نعم في الاستدعاء الثاني فقط","حسب قرار الرئيس"],1,"المادة 10 من المرسوم 13-105 (والمادة 11 من 13-217): لا تؤخذ الوكالات في الحسبان عند احتساب النصاب، ولا يتأثر النصاب بانسحاب عضو أثناء الجلسة."],
+  ["متى يصادق المجلس البلدي الجديد على نظامه الداخلي؟",["في دورته الأولى","بعد سنة من التنصيب","لا يحتاج، يرث نظام العهدة السابقة","عند أول دورة مالية"],0,"المادة 16 من القانون 11-10: يعد المجلس نظامه الداخلي ويصادق عليه في دورته الأولى وفق النموذج (المرسوم 13-105)."],
+  ["عضو له قريب يستفيد من صفقة معروضة للمداولة. ماذا يفعل؟",["يصوت بحرية","يمتنع عن حضور المداولة","يترأس الجلسة لضمان الحياد","يطلب جلسة مغلقة"],1,"المادة 60 من القانون 11-10: المداولة التي يحضرها عضو في حالة تعارض مصالح تُعد باطلة."]
+ ],
+ citizen:[
+  ["كم عمرك يجب أن يكون للتصويت؟",["18 سنة كاملة يوم الاقتراع","21 سنة","18 سنة يوم التسجيل فقط","23 سنة"],0,"18 سنة كاملة يوم الاقتراع، مع التسجيل والتمتع بالحقوق المدنية والسياسية."],
+  ["وضعت في الظرف ورقتين لقائمتين مختلفتين. ما حكم صوتك؟",["يُحتسب للقائمتين","يُحتسب للأولى","ملغى","يُحتسب ورقة بيضاء"],2,"التصويت دون مزج: ورقة قائمة واحدة."],
+  ["أشّرت على 3 مترشحين من القائمة نفسها. ماذا يحدث؟",["الورقة ملغاة","صوت للقائمة وأصوات تفضيلية للمترشحين الثلاثة","يُحتسب للأول فقط","يجب مترشح واحد فقط"],1,"يجوز التأشير على مترشح أو أكثر من القائمة نفسها في حدود عدد المقاعد."],
+  ["من يسلّم رخصة البناء لمسكن فردي في الحالات العادية؟",["الوالي","رئيس المجلس الشعبي البلدي","مدير التعمير","رئيس الدائرة"],1,"رئيس البلدية في الحالات التي يحددها قانون التعمير، والوالي أو الوزير لمشاريع معينة."],
+  ["هل يحق لك حضور جلسات المجلس البلدي؟",["لا، هي سرية","نعم، الجلسات علنية كقاعدة","فقط بإذن من الوالي","فقط للصحفيين"],1,"المادة 26 من القانون 11-10، مع استثناءات للجلسات المغلقة."],
+  ["طالب يدرس في ولاية أخرى يوم الاقتراع. ما الحل؟",["لا يمكنه التصويت","التصويت بالوكالة","التصويت في ولاية الدراسة","التصويت الإلكتروني"],1,"الطلبة الدارسون خارج ولاية إقامتهم ضمن الفئات المؤهلة للتوكيل."],
+  ["من المسؤول عن صيانة المدرسة الابتدائية في حيّك؟",["وزارة التربية مباشرة","البلدية","الولاية","مديرية التجهيزات"],1,"إنجاز وصيانة مؤسسات التعليم الابتدائي من صلاحيات البلدية."],
+  ["عُرض عليك مال مقابل صوتك. ماذا تفعل؟",["تقبل إن كان المبلغ صغيراً","ترفض وتبلّغ المنسق البلدي للسلطة المستقلة أو وكيل الجمهورية","تقبل وتصوت كما تشاء","لا شيء، ليس مخالفة"],1,"شراء الأصوات جريمة يعاقب عليها المعطي والآخذ."]
+ ]
+};
+
+/* ---------- FINDER DATA ---------- */
+var NEEDS = [
+ ["شهادة ميلاد، عقد زواج، شهادة إقامة","البلدية","رئيس البلدية ضابط للحالة المدنية، ويفوض النواب والموظفين. كثير من الوثائق متاح رقمياً عبر السجل الوطني الآلي للحالة المدنية."],
+ ["بطاقة التعريف وجواز السفر البيومتريان","البلدية (إيداع)","يُودع الملف على مستوى مصالح البلدية، ويصدر السند عن مصالح الدولة."],
+ ["رخصة بناء أو شهادة تعمير","البلدية","رئيس البلدية يسلّم رخص البناء والتجزئة والهدم وشهادة التعمير في الحالات العادية؛ الوالي أو الوزير لمشاريع معينة بحكم طبيعتها أو حجمها (المرسوم التنفيذي 15-19)."],
+ ["رفع النفايات ونظافة الحي","البلدية","من صلاحيات المجلس الشعبي البلدي في النظافة وحفظ الصحة، والمخطط البلدي لتسيير النفايات (القانون 01-19)."],
+ ["الإنارة العمومية والأرصفة","البلدية","صيانة الطرقات البلدية والإنارة العمومية والإشارات من المهام البلدية."],
+ ["ماء الشرب وقنوات الصرف","البلدية / المؤسسة المفوضة","البلدية مسؤولة عن التزويد وصرف المياه، وكثيراً ما يُفوَّض التسيير لمؤسسة عمومية؛ الشكوى تبدأ لدى المؤسسة ثم البلدية."],
+ ["المطعم والنقل المدرسي للابتدائي","البلدية","إنجاز وصيانة المدارس الابتدائية والمطاعم والنقل المدرسي من المهام البلدية، مع مساهمة الدولة."],
+ ["إكمالية أو ثانوية","الولاية / الدولة","التجهيزات التربوية للطورين المتوسط والثانوي من مجال تدخل الولاية والقطاع الوزاري."],
+ ["السكن الاجتماعي","الدائرة","ملفات السكن العمومي الإيجاري تودع لدى البلدية، والقوائم تعدّها لجنة على مستوى الدائرة. الطعون أمام لجنة الطعن الولائية."],
+ ["طريق ولائي متدهور","الولاية","الطرق الولائية من صلاحيات الولاية؛ الطرق البلدية للبلدية؛ الطرق الوطنية للدولة."],
+ ["مشروع تنموي للبلدية (PCD)","البلدية + الولاية","المخططات البلدية للتنمية يقترحها المجلس البلدي وتمولها الدولة عبر الولاية."],
+ ["الأمن والنظام العام","البلدية + الدولة","رئيس البلدية يمارس الضبط الإداري، والوالي مسؤول عن النظام العام في الولاية، وتنفذه مصالح الأمن."],
+ ["سوء خدمة في مرفق عمومي","التظلم ثم الوسيط","تظلم لدى المسؤول ثم لدى الوالي، ثم وسيط الجمهورية، ثم المحكمة الإدارية."]
+];
+
+/* ---------- TOOLS ---------- */
+var APC_SEATS=[[10000,13],[20000,15],[50000,19],[100000,23],[200000,33],[Infinity,43]];
+var APW_SEATS=[[250000,35],[650000,39],[950000,43],[1150000,47],[1250000,51],[Infinity,55]];
+function seatsFor(pop,tbl){ for(var i=0;i<tbl.length;i++) if(pop<=tbl[i][0]) return tbl[i][1]; return tbl[tbl.length-1][1]; }
+
+var TOOLS = {
+ listCalc: function(box){
+  box.innerHTML = '<div class="tool-head"><span class="badge">أداة</span><h3>حاسبة تشكيل القائمة</h3></div>'+
+  '<div class="fields"><div class="field"><label for="lc-type">المجلس</label><select id="lc-type"><option value="apc">المجلس الشعبي البلدي</option><option value="apw">المجلس الشعبي الولائي</option></select></div>'+
+  '<div class="field"><label for="lc-pop">عدد السكان (آخر إحصاء)</label><input id="lc-pop" type="number" min="1" value="35000" inputmode="numeric"></div>'+
+  '<div class="field"><label for="lc-free">نوع القائمة</label><select id="lc-free"><option value="free">حرة أو حزب غير معفى</option><option value="party">حزب معفى (4% أو 10 منتخبين)</option></select></div></div>'+
+  '<div class="out" id="lc-out" aria-live="polite"></div>';
+  function run(){
+   var type=box.querySelector("#lc-type").value, pop=Math.max(1,+box.querySelector("#lc-pop").value||1), free=box.querySelector("#lc-free").value==="free";
+   var seats=seatsFor(pop, type==="apc"?APC_SEATS:APW_SEATS);
+   var size=seats+(seats%2?7:6);
+   var womenApplies = type==="apw" || pop>20000;
+   var women = womenApplies?Math.ceil(size/3):0, youth=Math.ceil(size/2), uni=Math.ceil(size/3), sig=free?seats*35:0;
+   box.querySelector("#lc-out").innerHTML='<div class="kpis">'+
+    '<div class="kpi"><b>'+fmt(seats)+'</b><span>مقعداً للشغل</span></div>'+
+    '<div class="kpi"><b>'+fmt(size)+'</b><span>مترشحاً في القائمة</span></div>'+
+    '<div class="kpi"><b>'+(womenApplies?fmt(women):"معفى")+'</b><span>نساء على الأقل (الثلث)</span></div>'+
+    '<div class="kpi"><b>'+fmt(youth)+'</b><span>40 سنة فأقل (النصف)</span></div>'+
+    '<div class="kpi"><b>'+fmt(uni)+'</b><span>مستوى جامعي (الثلث)</span></div>'+
+    '<div class="kpi"><b>'+(free?fmt(sig):"معفاة")+'</b><span>توقيعاً مطلوباً</span></div></div>'+
+    '<div class="note">الكسر يُجبر إلى العدد الصحيح الأعلى. شرط تمثيل النساء لا يطبق في البلديات التي لا يزيد عدد سكانها عن 20 ألف نسمة. العدد الرسمي للمقاعد هو المحدد في المرسوم التنفيذي 26-282.</div>';
+  }
+  box.addEventListener("input",run); run();
+ },
+
+ seatSim: function(box){
+  var lists=[["القائمة أ",4200],["القائمة ب",3100],["القائمة ج",1650],["القائمة د",380],["القائمة هـ",270]];
+  box.innerHTML='<div class="tool-head"><span class="badge">محاكاة</span><h3>محاكي توزيع المقاعد</h3></div>'+
+   '<p style="margin:0;color:var(--muted);font-size:14px">أدخل الأصوات المعبّر عنها لكل قائمة (أمثلة افتراضية) واختر عدد المقاعد.</p>'+
+   '<div class="fields"><div class="field"><label for="ss-seats">عدد المقاعد</label><select id="ss-seats">'+[13,15,19,23,33,43].map(function(s){return '<option'+(s===15?' selected':'')+'>'+s+'</option>';}).join("")+'</select></div>'+
+   lists.map(function(l,i){return '<div class="field"><label for="ss-v'+i+'">'+l[0]+'</label><input id="ss-v'+i+'" type="number" min="0" value="'+l[1]+'" inputmode="numeric"></div>';}).join("")+'</div>'+
+   '<div class="out" id="ss-out" aria-live="polite"></div>';
+  function run(){
+   var S=+box.querySelector("#ss-seats").value, v=lists.map(function(l,i){return Math.max(0,+box.querySelector("#ss-v"+i).value||0);});
+   var total=v.reduce(function(a,b){return a+b;},0); if(!total){box.querySelector("#ss-out").innerHTML='<div class="verdict v-mid">أدخل أصواتاً لقائمة واحدة على الأقل.</div>';return;}
+   var keep=v.map(function(x){return x>=0.05*total;}); if(!keep.some(Boolean)) keep=v.map(function(){return true;});
+   var kept=v.reduce(function(a,x,i){return a+(keep[i]?x:0);},0), q=kept/S;
+   var seats=v.map(function(x,i){return keep[i]?Math.floor(x/q):0;}), used=seats.reduce(function(a,b){return a+b;},0);
+   var rem=v.map(function(x,i){return {i:i,r:keep[i]?x-seats[i]*q:-1};}).filter(function(o){return o.r>=0;}).sort(function(a,b){return b.r-a.r;});
+   var extra=v.map(function(){return 0;});
+   for(var k=0;k<S-used && k<rem.length;k++){ extra[rem[k].i]++; }
+   window.__lastSeats={S:S,seats:v.map(function(_,i){return seats[i]+extra[i];})};
+   var max=Math.max.apply(null,v);
+   var rows=v.map(function(x,i){ var tot=seats[i]+extra[i]; return '<tr class="'+(keep[i]?'':'excluded')+'"><td>'+lists[i][0]+'</td><td>'+fmt(x)+'</td><td>'+(100*x/total).toFixed(1)+'%</td><td>'+(keep[i]?fmt(seats[i]):'مقصاة')+'</td><td>'+(keep[i]?fmt(extra[i]):'')+'</td><td><b>'+fmt(tot)+'</b></td><td style="width:22%"><div class="bar" style="width:'+(100*x/max)+'%"></div></td></tr>';}).join("");
+   box.querySelector("#ss-out").innerHTML='<div class="kpis"><div class="kpi"><b>'+fmt(total)+'</b><span>صوتاً معبّراً عنه</span></div><div class="kpi"><b>'+fmt(Math.ceil(0.05*total))+'</b><span>عتبة 5%</span></div><div class="kpi"><b>'+fmt(Math.round(q))+'</b><span>المعامل الانتخابي</span></div></div>'+
+    '<div class="tablebox"><table><thead><tr><th>القائمة</th><th>الأصوات</th><th>النسبة</th><th>بالمعامل</th><th>بالباقي</th><th>المقاعد</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<div class="note">محاكاة تعليمية. عند تساوي البواقي يُمنح المقعد للقائمة ذات معدل السن الأصغر. توزيع المقاعد داخل كل قائمة يتم حسب الأصوات التفضيلية.</div>';
+   var p=document.getElementById("pres-box"); if(p&&p.__run) p.__run();
+  }
+  box.addEventListener("input",run); run();
+ },
+
+ presTool: function(box){
+  box.id="pres-box";
+  box.innerHTML='<div class="tool-head"><span class="badge">أداة</span><h3>من يحق له تقديم مرشح للرئاسة؟</h3></div>'+
+   '<p style="margin:0;color:var(--muted);font-size:14px">أدخل مقاعد كل قائمة، أو اضغط لاستيراد نتيجة المحاكي أعلاه.</p>'+
+   '<div class="fields">'+["أ","ب","ج","د","هـ"].map(function(n,i){return '<div class="field"><label for="pt-'+i+'">مقاعد القائمة '+n+'</label><input id="pt-'+i+'" type="number" min="0" value="'+[7,5,3,0,0][i]+'" inputmode="numeric"></div>';}).join("")+'</div>'+
+   '<div><button class="btn ghost" type="button" id="pt-imp">استيراد من محاكي المقاعد</button></div><div class="out" id="pt-out" aria-live="polite"></div>';
+  var names=["أ","ب","ج","د","هـ"];
+  function run(){
+   var s=names.map(function(_,i){return Math.max(0,+box.querySelector("#pt-"+i).value||0);}), T=s.reduce(function(a,b){return a+b;},0);
+   var out=box.querySelector("#pt-out"); if(!T){out.innerHTML='<div class="verdict v-mid">أدخل عدد المقاعد.</div>';return;}
+   var maj=s.findIndex(function(x){return x>T/2;}), res;
+   if(maj>=0) res='<div class="verdict v-ok">القائمة '+names[maj]+' تحوز الأغلبية المطلقة ('+s[maj]+' من '+T+'). هي وحدها تقدم المرشح.</div>';
+   else { var q=s.map(function(x,i){return x>=0.35*T?i:-1;}).filter(function(i){return i>=0;});
+     res = q.length? '<div class="verdict v-mid">لا أغلبية مطلقة. القوائم الحائزة على 35% على الأقل ('+Math.ceil(0.35*T)+' مقاعد): '+q.map(function(i){return "القائمة "+names[i];}).join(" و")+'. تقدم كل منها مرشحاً.</div>'
+     : '<div class="verdict v-bad">لا قائمة بلغت 35% من المقاعد. يمكن لجميع القوائم تقديم مرشح عنها.</div>'; }
+   out.innerHTML=res+'<div class="note">ثم اقتراع سري: الأغلبية المطلقة في الدور الأول، وإلا دور ثانٍ بين الأولين، وعند التساوي يفوز الأكبر سناً.</div>';
+  }
+  box.__run=null;
+  box.querySelector("#pt-imp").addEventListener("click",function(){ var L=window.__lastSeats; if(!L) return; L.seats.forEach(function(x,i){box.querySelector("#pt-"+i).value=x;}); run(); });
+  box.addEventListener("input",run); run();
+ },
+
+ eligibility: function(box){
+  box.innerHTML='<div class="tool-head"><span class="badge">أداة</span><h3>هل يحق لي التصويت يوم 28 نوفمبر؟</h3></div>'+
+   '<div class="fields"><div class="field"><label for="el-b">تاريخ الميلاد</label><input id="el-b" type="date" value="2008-11-20"></div>'+
+   '<div class="field"><label for="el-r">مسجل في القائمة الانتخابية؟</label><select id="el-r"><option value="y">نعم</option><option value="n">لا</option><option value="u">لست متأكداً</option></select></div>'+
+   '<div class="field"><label for="el-c">أتمتع بحقوقي المدنية والسياسية</label><select id="el-c"><option value="y">نعم</option><option value="n">لا (حكم قضائي بالحرمان)</option></select></div></div>'+
+   '<div class="out" id="el-out" aria-live="polite"></div>';
+  function run(){
+   var b=box.querySelector("#el-b").value, r=box.querySelector("#el-r").value, c=box.querySelector("#el-c").value, out=box.querySelector("#el-out");
+   if(!b){out.innerHTML='<div class="verdict v-mid">أدخل تاريخ ميلادك.</div>';return;}
+   var bd=new Date(b+"T00:00:00"), e=new Date(2026,10,28), age=e.getFullYear()-bd.getFullYear(); if(e.getMonth()<bd.getMonth()||(e.getMonth()===bd.getMonth()&&e.getDate()<bd.getDate())) age--;
+   var msg, cls;
+   if(age<18){cls="v-bad";msg="عمرك يوم الاقتراع "+age+" سنة. يشترط 18 سنة كاملة يوم الاقتراع.";}
+   else if(c==="n"){cls="v-bad";msg="الحرمان من الحقوق المدنية والسياسية بحكم قضائي يمنع التسجيل والتصويت طيلة مدته.";}
+   else if(r==="y"){cls="v-ok";msg="عمرك يوم الاقتراع "+age+" سنة. يحق لك التصويت. خذ بطاقة التعريف وتوجه إلى مكتبك بين 8 صباحاً و7 مساءً.";}
+   else if(r==="u"){cls="v-mid";msg="تحقق من تسجيلك لدى مصلحة الانتخابات بالبلدية أو عبر خدمات السلطة المستقلة للانتخابات الرقمية.";}
+   else {cls="v-mid";msg="المراجعة الاستثنائية للقوائم انتهت يوم 17 سبتمبر 2026، فلا يمكنك التصويت في هذا الموعد. سجل نفسك في المراجعة السنوية العادية (أكتوبر عادة) لتشارك في الاستحقاقات القادمة.";}
+   out.innerHTML='<div class="verdict '+cls+'">'+msg+'</div>';
+  }
+  box.addEventListener("input",run); run();
+ },
+
+ ballotSim: function(box){
+  var L=[["قائمة النخلة",["مترشح 1","مترشحة 2","مترشح 3","مترشحة 4"]],["قائمة الزيتونة",["مترشحة 1","مترشح 2","مترشح 3","مترشحة 4"]],["قائمة الحمامة",["مترشح 1","مترشح 2","مترشحة 3","مترشح 4"]]];
+  box.innerHTML='<div class="tool-head"><span class="badge">محاكاة</span><h3>جرّب ورقة التصويت قبل يوم الاقتراع</h3></div>'+
+   '<p style="margin:0;color:var(--muted);font-size:14px">قوائم افتراضية. ضع ورقة أو أكثر في الظرف وأشّر على من تشاء، ثم اعرف حكم صوتك. عدد المقاعد في المثال: 3.</p>'+
+   '<div class="ballots">'+L.map(function(l,i){return '<div class="ballot" id="bl-'+i+'"><h4>'+l[0]+'</h4>'+l[1].map(function(c,j){return '<label><input type="checkbox" id="bc-'+i+'-'+j+'"> '+c+'</label>';}).join("")+'<button type="button" class="btn ghost put" data-i="'+i+'" aria-pressed="false">ضع في الظرف</button></div>';}).join("")+'</div>'+
+   '<div class="out" id="bs-out" aria-live="polite"></div>';
+  var inEnv=[false,false,false];
+  function run(){
+   var marks=L.map(function(l,i){return l[1].filter(function(_,j){return box.querySelector("#bc-"+i+"-"+j).checked;}).length;});
+   var env=inEnv.map(function(x,i){return x?i:-1;}).filter(function(i){return i>=0;}), out=box.querySelector("#bs-out"), m;
+   L.forEach(function(_,i){box.querySelector("#bl-"+i).classList.toggle("in",inEnv[i]);});
+   if(env.length===0) m='<div class="verdict v-mid">الظرف فارغ: ورقة بيضاء، لا تدخل في الأصوات المعبّر عنها.</div>';
+   else if(env.length>1) m='<div class="verdict v-bad">ورقتان لقائمتين مختلفتين في الظرف: صوت ملغى (المزج ممنوع).</div>';
+   else { var i=env[0]; if(marks[i]>3) m='<div class="verdict v-bad">أشّرت على '+marks[i]+' مترشحين وعدد المقاعد 3: تجاوزت الحد المسموح، وقد يُعتبر صوتك ملغى.</div>';
+     else if(marks[i]===0) m='<div class="verdict v-ok">صوت صحيح لـ'+L[i][0]+' دون صوت تفضيلي. يُحتسب للقائمة.</div>';
+     else m='<div class="verdict v-ok">صوت صحيح لـ'+L[i][0]+' مع '+marks[i]+' صوت(أصوات) تفضيلية لمترشحيها. هذه الأصوات تحدد من يأخذ مقاعد القائمة.</div>'; }
+   var stray=marks.some(function(x,i){return x>0&&!inEnv[i];});
+   out.innerHTML=m+(stray?'<div class="note">التأشير على ورقة لم تضعها في الظرف لا أثر له؛ الأوراق غير المستعملة تُرمى في السلة المخصصة داخل المعزل.</div>':'');
+  }
+  box.querySelectorAll(".put").forEach(function(b){ b.addEventListener("click",function(){ var i=+b.dataset.i; inEnv[i]=!inEnv[i]; b.setAttribute("aria-pressed",inEnv[i]); b.textContent=inEnv[i]?"أخرج من الظرف":"ضع في الظرف"; run(); }); });
+  box.addEventListener("change",run); inEnv[0]=true; box.querySelector('.put[data-i="0"]').textContent="أخرج من الظرف"; box.querySelector('.put[data-i="0"]').setAttribute("aria-pressed","true"); box.querySelector("#bc-0-1").checked=true; run();
+ },
+
+ finder: function(box){
+  box.innerHTML='<div class="tool-head"><span class="badge">أداة</span><h3>دليل الجهة المختصة</h3></div><div class="needs">'+NEEDS.map(function(n,i){return '<button type="button" class="need" data-i="'+i+'" aria-pressed="'+(i===2)+'">'+n[0]+'</button>';}).join("")+'</div><div class="out" id="fd-out" aria-live="polite"></div>';
+  function show(i){ var n=NEEDS[i]; box.querySelectorAll(".need").forEach(function(b){b.setAttribute("aria-pressed", +b.dataset.i===i);}); box.querySelector("#fd-out").innerHTML='<div class="card"><h3>'+n[0]+'</h3><p><span class="tag t-in">'+n[1]+'</span></p><p>'+n[2]+'</p></div>'; }
+  box.querySelectorAll(".need").forEach(function(b){ b.addEventListener("click",function(){show(+b.dataset.i);}); }); show(2);
+ }
+};
+
+/* ---------- QUIZ widget ---------- */
+function quiz(box, key){
+ var Q=QUIZ[key], i=0, score=0, answered=false;
+ function draw(){
+  if(i>=Q.length){ box.innerHTML='<div class="tool-head"><span class="badge">نتيجة</span><h3>أجبت إجابة صحيحة عن '+score+' من '+Q.length+'</h3></div><p style="margin:0">'+(score>=7?"ممتاز، أنت ملمّ بالقواعد الأساسية.":score>=5?"جيد، راجع البطاقات التي أخطأت فيها.":"راجع أقسام الدليل ثم أعد المحاولة.")+'</p><div><button class="btn" type="button" id="qz-r">أعد الاختبار</button></div>'; box.querySelector("#qz-r").onclick=function(){i=0;score=0;draw();}; return; }
+  var q=Q[i]; answered=false;
+  box.innerHTML='<div class="qnav"><span class="badge">سؤال '+(i+1)+' من '+Q.length+'</span><span class="score">النقاط: '+score+'</span></div><div class="q"><h4>'+q[0]+'</h4><div class="opts">'+q[1].map(function(o,j){return '<button type="button" class="opt" data-j="'+j+'">'+o+'</button>';}).join("")+'</div><div class="explain" id="qz-e"></div></div><div><button class="btn hidden" type="button" id="qz-n">السؤال التالي</button></div>';
+  box.querySelectorAll(".opt").forEach(function(b){ b.addEventListener("click",function(){
+   if(answered) return; answered=true; var j=+b.dataset.j;
+   if(j===q[2]){score++; b.classList.add("right");} else { b.classList.add("wrong"); box.querySelector('.opt[data-j="'+q[2]+'"]').classList.add("right"); }
+   box.querySelector("#qz-e").textContent=(j===q[2]?"إجابة صحيحة. ":"الإجابة الصحيحة مظللة. ")+q[3];
+   var n=box.querySelector("#qz-n"); n.classList.remove("hidden"); n.textContent = i===Q.length-1?"اعرض النتيجة":"السؤال التالي"; n.onclick=function(){i++;draw();};
+  }); });
+ }
+ draw();
+}
+
+/* ---------- RENDER ---------- */
+var view=document.getElementById("view"), nav=document.getElementById("secnav");
+var INDEX=[];
+function buildIndex(){
+ ["elected","citizen"].forEach(function(v){ VIEWS[v].sections.forEach(function(s){
+  INDEX.push({v:v,s:s.id,t:s.title,x:s.title+" "+(s.lead||"")});
+  (s.cards||[]).forEach(function(c){ INDEX.push({v:v,s:s.id,t:c.t+" · "+s.title,x:c.t+" "+c.b.replace(/<[^>]+>/g," ")+" "+(c.ref||"")}); });
+  (s.acc||[]).forEach(function(a){ INDEX.push({v:v,s:s.id,t:a[0]+" · "+s.title,x:a[0]+" "+a[1].replace(/<[^>]+>/g," ")}); });
+  (s.timeline||[]).forEach(function(a){ INDEX.push({v:v,s:s.id,t:a[0]+" · "+s.title,x:a[0]+" "+a[1]}); });
+ }); });
+ NEEDS.forEach(function(n){ INDEX.push({v:"citizen",s:"c-who",t:n[0]+" · لمن تتوجه",x:n.join(" ")}); });
+ LIB.forEach(function(l){ INDEX.push({v:current||"elected",s:"library",t:l.n,x:l.n+" "+l.d,lib:1}); });
+}
+
+function sectionHTML(s,n){
+ var h='<section class="sec" id="'+s.id+'"><div class="sec-head"><span class="num">'+String(n).padStart(2,"0")+'</span><h2>'+s.title+'</h2>'+(s.lead?'<p>'+s.lead+'</p>':'')+'</div>';
+ if(s.timeline){ h+='<div class="card" style="margin-bottom:12px"><div class="timeline">'+s.timeline.map(function(t,i){return '<div class="step"><div class="dot">'+(i+1)+'</div><div><h4>'+t[0]+'</h4><p>'+t[1]+'</p></div></div>';}).join("")+'</div>'+(s.ref?'<div class="ref">'+s.ref+'</div>':'')+'</div>'; }
+ if(s.cards){ h+='<div class="grid">'+s.cards.map(function(c){return '<article class="card"><h3>'+c.t+'</h3>'+c.b+(c.ref?'<div class="ref">'+c.ref+'</div>':'')+'</article>';}).join("")+'</div>'; }
+ if(s.acc){ h+='<div>'+s.acc.map(function(a,i){return '<details class="acc"'+(i===0?' open':'')+'><summary>'+a[0]+'</summary><div class="in">'+(a[1].charAt(0)==="<"?a[1]:'<p style="margin:0">'+a[1]+'</p>')+'</div></details>';}).join("")+(s.ref&&!s.timeline?'<div class="ref" style="margin-top:8px">'+s.ref+'</div>':'')+'</div>'; }
+ if(s.compare){ h+='<div class="card" style="margin-top:12px"><h3>مقارنة سريعة: البلدي والولائي</h3><div class="tablebox"><table><thead><tr><th>البند</th><th>المجلس الشعبي البلدي</th><th>المجلس الشعبي الولائي</th></tr></thead><tbody>'+s.compare.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>';}).join('')+'</tbody></table></div></div>'; }
+ if(s.proxy){ h+='<div class="tool" style="margin-top:12px"><div class="tool-head"><span class="badge">نموذج</span><h3>نموذج الوكالة (ملحق المرسومين)</h3></div><pre id="proxy-txt" style="white-space:pre-wrap;font-family:var(--body);background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:12px;margin:0;font-size:14.5px">وكالة\n\nأنا الممضي(ة) أسفله، السيدة/السيد (1) ........................ عضو المجلس الشعبي البلدي لبلدية / الولائي لولاية (1) ........................ يتعذر علي حضور دورة/جلسة (1) المجلس، التي ستنعقد من ............ إلى ............، أوكل زميلتي/زميلي (1) السيدة/السيد (1) ........................ قصد التصويت باسمي.\n\nحرر بـ ............ في ............\n\nتوقيع الموكل (2)\n\n(1) أشطب العبارات غير المفيدة.\n(2) مصادق عليه قانوناً من طرف السلطة المؤهلة لهذا الغرض بوضع ختمها والختم الرسمي للمؤسسة التابعة لها.</pre><div><button class="btn ghost" type="button" id="proxy-copy">نسخ النموذج</button> <span id="proxy-msg" style="font-size:13px;color:var(--muted)"></span></div><div class="note">الوكالة الأصلية الموقعة والمصادق عليها وحدها تُقبل. تُسلَّم لرئيس المجلس قبل الجلسة أو من الوكيل في بدايتها.</div></div>'; }
+ if(s.checklist){ h+='<div class="tool" style="margin-top:12px"><div class="tool-head"><span class="badge">قائمة</span><h3>مهام المجلس الجديد خلال الأسابيع الأولى</h3><span class="score" data-ck-score>0 / '+s.checklist.length+'</span></div><div class="ck">'+s.checklist.map(function(c,i){return '<label class="ck-row"><input type="checkbox" id="ck-'+s.id+'-'+i+'"> <span>'+c+'</span></label>';}).join('')+'</div></div>'; }
+ if(s.tool){ h+='<div class="tool" data-tool="'+s.tool+'" style="margin-top:12px"></div>'; }
+ if(s.quiz){ h+='<div class="tool" data-quiz="'+s.quiz+'"></div>'; }
+ return h+'</section>';
+}
+
+function libraryHTML(n){
+ return '<section class="sec" id="library"><div class="sec-head"><span class="num">'+String(n).padStart(2,"0")+'</span><h2>المكتبة القانونية</h2><p>النصوص المباشرة وغير المباشرة ووضعيتها إلى غاية 30 أكتوبر 2026.</p></div>'+
+ '<div class="filters"><button type="button" class="chip" data-f="all" aria-current="true">الكل</button><button type="button" class="chip" data-f="direct">نصوص مباشرة</button><button type="button" class="chip" data-f="indirect">نصوص غير مباشرة</button><button type="button" class="chip" data-f="draft">مشاريع</button></div>'+
+ '<div class="lib" id="lib">'+LIB.map(function(l){return '<div class="lib-row" data-k="'+l.k+'" data-s="'+l.s+'"><div><b>'+l.n+'</b><p>'+l.d+'</p></div>'+tag(l.s)+'</div>';}).join("")+'</div></section>';
+}
+
+var current=null;
+function render(v, focus){
+ current=v; var V=VIEWS[v];
+ document.querySelectorAll(".switch button").forEach(function(b){b.setAttribute("aria-selected", b.dataset.view===v);});
+ var secs=V.sections, html=secs.map(function(s,i){return sectionHTML(s,i+1);}).join("")+libraryHTML(secs.length+1);
+ view.innerHTML=html;
+ nav.innerHTML=secs.map(function(s,i){return '<button type="button" class="chip" data-go="'+s.id+'"'+(i===0?' aria-current="true"':'')+'>'+s.title+'</button>';}).join("")+'<button type="button" class="chip" data-go="library">المكتبة القانونية</button>';
+ view.querySelectorAll("[data-tool]").forEach(function(b){TOOLS[b.dataset.tool](b);});
+ view.querySelectorAll("[data-quiz]").forEach(function(b){quiz(b,b.dataset.quiz);});
+ var pc=document.getElementById('proxy-copy'); if(pc){ pc.addEventListener('click',function(){ var t=document.getElementById('proxy-txt').textContent, m=document.getElementById('proxy-msg'); try{ navigator.clipboard.writeText(t).then(function(){m.textContent='تم النسخ';},function(){m.textContent='حدّد النص وانسخه يدوياً';}); }catch(e){ m.textContent='حدّد النص وانسخه يدوياً'; } }); }
+ view.querySelectorAll('.ck').forEach(function(box){ var sc=box.parentNode.querySelector('[data-ck-score]'); box.addEventListener('change',function(){ var all=box.querySelectorAll('input'), n=0; all.forEach(function(x){ if(x.checked) n++; }); sc.textContent=n+' / '+all.length; }); });
+ var pb=document.getElementById("pres-box"); if(pb){ pb.__run=function(){}; }
+ view.querySelectorAll(".filters .chip").forEach(function(c){ c.addEventListener("click",function(){
+  var f=c.dataset.f; view.querySelectorAll(".filters .chip").forEach(function(x){x.setAttribute("aria-current", x===c);});
+  view.querySelectorAll(".lib-row").forEach(function(r){ var show = f==="all" || (f==="draft"? r.dataset.s==="draft" : r.dataset.k===f && r.dataset.s!=="draft"); r.classList.toggle("hidden",!show); });
+ }); });
+ observe();
+ if(focus){ var t=document.getElementById(focus); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); }
+}
+
+function observe(){
+ if(!("IntersectionObserver" in window)) return;
+ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ nav.querySelectorAll(".chip").forEach(function(c){ var on=c.dataset.go===e.target.id; c.setAttribute("aria-current",on); if(on && c.scrollIntoView) c.parentNode.scrollTo({left:c.offsetLeft-c.parentNode.clientWidth/2+c.clientWidth/2,behavior:"smooth"}); }); } }); },{rootMargin:"-70px 0px -70% 0px"});
+ view.querySelectorAll(".sec").forEach(function(s){io.observe(s);});
+}
+
+nav.addEventListener("click",function(e){ var b=e.target.closest(".chip"); if(!b) return; var t=document.getElementById(b.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
+document.querySelectorAll(".switch button").forEach(function(b){ b.addEventListener("click",function(){ var v=b.dataset.view; if(location.hash!=="#"+v) location.hash=v; else render(v); window.scrollTo({top:0}); }); });
+window.addEventListener("hashchange",route);
+function route(){ var h=(location.hash||"").slice(1); render(h==="citizen"?"citizen":"elected"); }
+
+/* search */
+var qi=document.getElementById("q"), res=document.getElementById("results");
+qi.addEventListener("input",function(){
+ var s=qi.value.trim(); if(s.length<2){res.innerHTML="";return;}
+ var norm=function(x){return x.replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي");}, ns=norm(s);
+ var hits=INDEX.filter(function(it){return norm(it.x).indexOf(ns)>=0;}).slice(0,8);
+ res.innerHTML = hits.length? hits.map(function(h,k){return '<button type="button" class="result" data-k="'+k+'"><b>'+esc(h.t)+'</b><span>'+(h.lib?"المكتبة القانونية":(h.v==="elected"?"واجهة المنتخب":"واجهة المواطن"))+'</span></button>';}).join("") : '<div class="result" style="cursor:default"><b>لا نتائج</b><span>جرّب كلمة أخرى، مثل: النصاب، الوكالة، الميزانية.</span></div>';
+ res.querySelectorAll("button.result").forEach(function(b){ b.addEventListener("click",function(){ var h=hits[+b.dataset.k], v=h.lib?current:h.v; qi.value=""; res.innerHTML=""; if(v!==current){ history.replaceState(null,"","#"+v); render(v,h.s);} else { var t=document.getElementById(h.s); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); } }); });
+});
+
+buildIndex(); route();
+})();
+</script>
+</body>
+</html>
